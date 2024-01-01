@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>book</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+td {
+	text-align: center;
+}
+		</style>
+	</head>
+	<body style="margin: auto; width: 80%; display: flex; flex-direction: column; justify-content: center;">
+		<h1 style="text-align: center;">books</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>title</th>
+					<th>author</th>
+					<th>pages</th>
+					<th>status</th>
+					<th>read</th>
+					<th>delete</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<button id="new" style="margin-top: 24px;">new book</button>
+		<dialog>
+			<form method="dialog">
+				<input type="text" name="title" placeholder="title">
+				<input type="text" name="author" placeholder="author">
+				<input type="number" name="pages" placeholder="pages">
+				<input type="submit" name="add" placeholder="add">
+			</form>
+		</dialog>
+
+		<script>
+			table = document.querySelector('tbody')
+			dialog = document.querySelector('dialog')
+			add = document.querySelector('#new')
+			submit = document.querySelector('input[type="submit"]')
+
+			const myLibrary = [];
+
+			function renderLibrary() {
+				table.innerHTML = ""
+				myLibrary.forEach((book, i) => table.insertAdjacentHTML('beforeEnd', 
+					`<tr>
+						<td>${book.title}</td>
+						<td>${book.author}</td>
+						<td>${book.pages}</td>
+						<td>${book.read == true ? 'read' : 'not read'}</td>
+						<td><button type="button" data-attribute="${i}">read/unread</button></td>
+						<td><button type="button" data-attribute="${i}">delete</button></td>
+					</tr>`
+				))
+			}
+
+			function Book(title, author, pages) {
+				this.title = title
+				this.author = author
+				this.pages = pages
+				this.read = false
+			}
+
+			function addBookToLibrary(title, author, pages) {
+				book = new Book(title, author, pages)
+				myLibrary.push(book)
+				renderLibrary()
+			}
+
+			add.addEventListener('click', e => {
+				dialog.showModal()
+			})
+			
+			submit.addEventListener('click', e => {
+				e.preventDefault()
+				addBookToLibrary(e.target.form['title'].value, e.target.form['author'].value, e.target.form['pages'].value)
+				dialog.close()
+			})
+
+			table.addEventListener('click', e => {
+				if (e.target.type == 'button') {
+					if (e.target.innerHTML == 'delete') {
+						myLibrary.splice(e.target.attributes[1].value, 1)
+						renderLibrary()
+					} else if (e.target.innerHTML == 'read/unread') {
+						myLibrary[e.target.attributes[1].value].read = !myLibrary[e.target.attributes[1].value].read
+						renderLibrary()
+					}
+				}
+			})
+
+		</script>
+	</body>
+</html>

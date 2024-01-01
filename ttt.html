@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>tic tac toe</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<form>
+			<input type="text" id="p1n" placeholder="player 1 name">
+			<input type="text" id="p1s" placeholder="player 1 symbol">
+			<input type="text" id="p2n" placeholder="player 2 name">
+			<input type="text" id="p2s" placeholder="player 2 symbol">
+			<button type="submit" id="start">start</button>
+		</form>
+		<div id="info"></div>
+		<table id="game"></table>
+		<script>
+			let board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+			let players = [{name: 'player 1', symbol: 'X'}, {name: 'player 2', symbol: 'O'}]
+			let playerOneTurn = true
+			const form = document.querySelector('form')
+			const start = document.querySelector('#start')
+			const info = document.querySelector('#info')
+			start.addEventListener('click', (e) => {
+				e.preventDefault()
+				p1n = document.querySelector('#p1n').value
+				p1s = document.querySelector('#p1s').value
+				p2n = document.querySelector('#p2n').value
+				p2s = document.querySelector('#p2s').value
+				players = [{name: p1n, symbol: p1s}, {name: p2n, symbol: p2s}]
+				board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+				renderTable()
+				form.reset()
+				info.innerHTML = ""
+				info.insertAdjacentHTML('beforeEnd', `
+					<table>
+						<tr>
+							<th>name</th>
+							<th>symbol</th>
+						</tr>
+						<tr>
+							<td>${p1n}</td>
+							<td>${p1s}</td>
+						</tr>
+						<tr>
+							<td>${p2n}</td>
+							<td>${p2s}</td>
+						</tr>
+					</table>`)
+			})
+
+			function iswinner() {
+				if (
+				board[0][0] == players[0].symbol && board[0][1] == players[0].symbol && board[0][2] == players[0].symbol ||
+				board[1][0] == players[0].symbol && board[1][1] == players[0].symbol && board[1][2] == players[0].symbol ||
+				board[2][0] == players[0].symbol && board[2][1] == players[0].symbol && board[2][2] == players[0].symbol ||
+				board[0][0] == players[0].symbol && board[1][0] == players[0].symbol && board[2][0] == players[0].symbol ||
+				board[0][1] == players[0].symbol && board[1][1] == players[0].symbol && board[2][1] == players[0].symbol ||
+				board[0][2] == players[0].symbol && board[1][2] == players[0].symbol && board[2][2] == players[0].symbol ||
+				board[0][0] == players[0].symbol && board[1][1] == players[0].symbol && board[2][2] == players[0].symbol ||
+				board[0][2] == players[0].symbol && board[1][1] == players[0].symbol && board[2][0] == players[0].symbol ||
+
+				board[0][0] == players[1].symbol && board[0][1] == players[1].symbol && board[0][2] == players[1].symbol ||
+				board[1][0] == players[1].symbol && board[1][1] == players[1].symbol && board[1][2] == players[1].symbol ||
+				board[2][0] == players[1].symbol && board[2][1] == players[1].symbol && board[2][2] == players[1].symbol ||
+				board[0][0] == players[1].symbol && board[1][0] == players[1].symbol && board[2][0] == players[1].symbol ||
+				board[0][1] == players[1].symbol && board[1][1] == players[1].symbol && board[2][1] == players[1].symbol ||
+				board[0][2] == players[1].symbol && board[1][2] == players[1].symbol && board[2][2] == players[1].symbol ||
+				board[0][0] == players[1].symbol && board[1][1] == players[1].symbol && board[2][2] == players[1].symbol ||
+				board[0][2] == players[1].symbol && board[1][1] == players[1].symbol && board[2][0] == players[1].symbol 
+				) {
+					return true
+				} else {
+					return false
+				}
+			}
+
+			function isdraw() {
+				let count = 0
+				for (let i = 0; i < 3; i++) {
+					for (let j = 0; j < 3; j++) {
+						if (board[i][j] != " ") {
+							count++
+						}
+					}
+				}
+				if (count == 9) {
+					return true
+				} else {
+					return false
+				}
+			}
+
+			table = document.querySelector('#game')
+			function renderTable() {
+				table.innerHTML = ""
+				contents = ""
+				for (let i = 0; i < 3; i++) {
+					contents += "<tr>"
+					for (let j = 0; j < 3; j++) {
+						contents += `<td style="border: 1px solid black; width: 20px; height: 20px;" id="${i},${j}">${board[i][j]}</td>`
+					}
+					contents += "</tr>"
+				}
+				table.insertAdjacentHTML('afterBegin', contents)
+			}
+			renderTable()
+
+			table.addEventListener('click', e => {
+				console.log(e)
+				if (e.target.tagName == 'TD') {
+					if (e.target.textContent == ' ') {
+						const [i, j] = (e.target.id.split(','))
+						if (playerOneTurn) {
+							board[i][j] = players[0].symbol
+						} else {
+							board[i][j] = players[1].symbol
+						}
+						renderTable()
+						if (iswinner()) {
+							if (playerOneTurn) {
+								alert('player 1 wins')
+							} else {
+								alert('player 2 wins')
+							}
+						} else if (isdraw()) {
+							alert('draw')
+						}
+						playerOneTurn = !playerOneTurn
+					} else {
+						alert('spot taken')
+					}
+				}
+			})
+
+		</script>	
+	</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>todo</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			* {
+				box-sizing: border-box;
+				border: 1px solid black;
+				margin: 0;
+				padding: 0;
+			}
+
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+	<body style="display: flex; align-items: center;">
+		<main id="cards" style="display: flex;"></main>
+		<button type="button" id="cp" style="height: 100px; width: 100px;">+</button>
+		<script>
+			'use strict'
+			const cards = document.getElementById('cards')
+			const cp = document.getElementById('cp')
+
+			let projects
+
+			if (!localStorage.getItem('projects')) {
+				projects = []
+				projects.push(new Project('project 1'))
+			} else {
+				projects = JSON.parse(localStorage.getItem('projects'))
+			}
+
+			class Project {
+				constructor(name) {
+					this.name = name
+					this.todos = []
+				}
+			}
+
+			class Todo {
+				constructor(title, desc, due, priority) {
+					this.title = title
+					this.desc = desc
+					this.due = due
+					this.priority = priority
+				}
+			}
+
+			function renderCards() {
+				cards.innerHTML = ""
+				projects.forEach((project, i) => {
+					let card = '<section style="height: 80vh; width: 400px; margin: 20px 10px; display: flex; flex-direction: column; overflow: auto;">'
+					card += `<h1>${project.name}</h1>`
+					project.todos.forEach((todo, j) => {
+						let item = '<section>'
+						item += `<h2 onclick="toggleDesc(${j})">${todo.title}</h2>`
+						item += `<p class="hidden desc">${todo.desc}</p>`
+						item += `<p>${todo.due}</p>`
+						item += `<p>${todo.priority}</p>`
+						item += `<button type="button" onclick="deleteTodo('${project.name}', ${j})">delete</button>`
+						item += '</section>'
+						card += item
+					})
+					card += `<button type="button" onclick="addTodo('${project.name}')">add</button>`
+					card += `<button type="button" onclick="deleteCard(${i})">delete</button>`
+					card += '</section>'
+					cards.insertAdjacentHTML('beforeEnd', card)
+				})
+				localStorage.setItem('projects', JSON.stringify(projects))
+			}
+
+			function toggleDesc(i) {
+				document.querySelectorAll('.desc')[i].classList.toggle('hidden')
+			}
+
+			function addTodo(n) {
+				projects.find(p => p.name == n).todos.push(new Todo(prompt('title'), prompt('desc'), prompt('due'), prompt('priority')))
+				renderCards()
+			}
+
+			function deleteTodo(n, i) {
+				let removed = projects.find(p => p.name == n).todos.splice(i, 1)
+				renderCards()
+			}
+
+			function deleteCard(i) {
+				let removed = projects.splice(i, 1)
+				renderCards()
+			}
+
+			cp.addEventListener('click', () => {
+				projects.push(new Project(prompt('name?')))
+				renderCards()
+			})
+
+			renderCards()
+		</script>
+	</body>
+</html>
