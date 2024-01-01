@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>weather</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+		</style>
+	</head>
+	<body>
+		<button type="button" id="format">change format</button>
+		<form>
+			<input id="location" required>
+			<button type="submit">get weather</button>
+		</form>
+		<div id="weather"></div>
+		<script>
+			const format = document.getElementById('format')
+			const loc = document.getElementById('location')
+			const form = document.querySelector('form')
+			const weather = document.getElementById('weather')
+			let celcius = true
+
+			async function getTemps() {
+				data = await fetch(`http://api.weatherapi.com/v1/current.json?key=eadfe1b113924558a36152918240101&q=${loc.value}`)
+					.then(res => res.json())		
+					.then(res => {
+						weather.innerHTML = ""
+						temp = celcius == true ? res.current.temp_c : res.current.temp_f
+						console.log(res.current.condition.icon.slice(2))
+						weather.insertAdjacentHTML('beforeEnd', `<p>${temp}</p><img src=${res.current.condition.icon.slice(2)} alt="icon">`)
+					})
+			}
+
+			function changeFormat() {
+				celcius = !celcius
+			}
+
+			format.addEventListener('click', changeFormat)
+			form.addEventListener('submit', e => {
+				e.preventDefault()
+				getTemps()
+			})
+		</script>
+	</body>
+</html>
