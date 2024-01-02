@@ -103,10 +103,3 @@ class LinkedList {
 		return str + 'null'
 	}
 }
-
-arr = new LinkedList
-arr.append(new Node(0))
-arr.append(new Node(1))
-arr.append(new Node(2))
-arr.append(new Node(3))
-console.log(arr.toString())
