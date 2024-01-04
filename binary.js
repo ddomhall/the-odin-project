@@ -41,36 +41,27 @@ class Tree {
 	}
 
 	delete(value, root=this.root) {
-		// Base case
 		if (root === null) {
 			return root;
 		}
 
-		// Traverse down the tree
 		if (value < root.data) {
 			root.left = this.delete(value, root.left);
 		} else if (value > root.data) {
 			root.right = this.delete(value, root.right);
 		} 
 
-		// Value matches -> delete node and update pointers
 		else {
-			// option 1: root(child) has only one child
 			if (root.left === null) {
-				// return the child's right so new parent can point to it
 				return root.right;
 			} else if (root.right === null) {
-				// return child's left so new parent can point to it
 				return root.left;
 			}
-			// option 2: Node has two children
 			else {
-				// Replace node with next smallest value
 				const minData = function findNextSmallestRightData(root) {
 					let min = root.data;
 					let newRoot = root;
 
-					// Search for a left node with no left children. 
 					while (newRoot.left !== null) {
 						min = root.left.data;
 						newRoot = root.left;
@@ -80,13 +71,23 @@ class Tree {
 				}
 
 				root.data = minData(root.right);
-
-				// Delete the copied node from minData()
 				root.right = this.delete(root.data, root.right)
 			}
 		}
 
 		return root;
+	}
+
+	find(value, root=this.root) {
+		if (value == root.data) {
+			return root
+		} else if (value < root.data) {
+			return this.find(value, root.left)
+		} else if (value > root.data) {
+			return this.find(value, root.right)
+		} else {
+			return 'not found'
+		}
 	}
 }
 
@@ -105,5 +106,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
-tree.delete(1)
 prettyPrint(tree.root)
