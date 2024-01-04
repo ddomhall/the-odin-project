@@ -89,6 +89,29 @@ class Tree {
 			return 'not found'
 		}
 	}
+
+	levelOrder(cb='', q=[this.root], v=[]) {
+		if (!q[0]) {
+			return v
+		}
+
+		if (cb) {
+			q[0].data = cb(q[0].data)
+		} else {
+			v.push(q[0].data)
+		}
+
+		if (q[0].left) {
+			q.push(q[0].left)
+		}
+
+		if (q[0].right) {
+			q.push(q[0].right)
+		}
+
+		q.shift()
+		return this.levelOrder(cb, q, v)
+	}
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -104,6 +127,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 	}
 };
 
+function timestwo(n) {
+	return n * 2
+}
+
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
+tree.levelOrder(timestwo)
 prettyPrint(tree.root)
