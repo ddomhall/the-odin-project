@@ -112,6 +112,31 @@ class Tree {
 		q.shift()
 		return this.levelOrder(cb, q, v)
 	}
+
+	inOrder(cb='', s=[this.root], v=[]) {
+		let cur = s[s.length - 1]
+		if (!cur) {
+			return
+		}
+
+		return this.inOrder(cb, cur.left, v)
+
+		if (cb) {
+			cur.data = cb(cur.data)
+		} else {
+			v.push(cur.data)
+		}
+
+		return this.inOrder(cb, cur.right, v)
+	}
+
+	preOrder(cb='') {
+
+	}
+
+	postOrder(cb='') {
+
+	}
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -133,5 +158,5 @@ function timestwo(n) {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
-tree.levelOrder(timestwo)
+tree.inOrder(timestwo)
 prettyPrint(tree.root)
