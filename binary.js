@@ -135,12 +135,50 @@ class Tree {
 		return v
 	}
 
-	preOrder(cb='') {
 
+	preOrder(cb='', root=this.root, v=[]) {
+		if (!root) {
+			return
+		}
+
+		if (cb) {
+			root.data = cb(root.data)
+		} else {
+			v.push(root.data)
+		}
+
+		if (root.left) {
+			this.preOrder(cb, root.left, v)
+		}
+
+		if (root.right) {
+			this.preOrder(cb, root.right, v)
+		}
+
+		return v
 	}
 
-	postOrder(cb='') {
 
+	postOrder(cb='', root=this.root, v=[]) {
+		if (!root) {
+			return
+		}
+
+		if (root.left) {
+			this.postOrder(cb, root.left, v)
+		}
+
+		if (root.right) {
+			this.postOrder(cb, root.right, v)
+		}
+
+		if (cb) {
+			root.data = cb(root.data)
+		} else {
+			v.push(root.data)
+		}
+
+		return v
 	}
 }
 
