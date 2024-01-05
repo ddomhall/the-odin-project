@@ -195,7 +195,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 	}
 };
 
-function timestwo(n) {
+function tt(n) {
 	return n * 2
 }
 
