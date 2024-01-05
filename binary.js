@@ -113,21 +113,26 @@ class Tree {
 		return this.levelOrder(cb, q, v)
 	}
 
-	inOrder(cb='', s=[this.root], v=[]) {
-		let cur = s[s.length - 1]
-		if (!cur) {
+	inOrder(cb='', root=this.root, v=[]) {
+		if (!root) {
 			return
 		}
 
-		return this.inOrder(cb, cur.left, v)
-
-		if (cb) {
-			cur.data = cb(cur.data)
-		} else {
-			v.push(cur.data)
+		if (root.left) {
+			this.inOrder(cb, root.left, v)
 		}
 
-		return this.inOrder(cb, cur.right, v)
+		if (cb) {
+			root.data = cb(root.data)
+		} else {
+			v.push(root.data)
+		}
+
+		if (root.right) {
+			this.inOrder(cb, root.right, v)
+		}
+
+		return v
 	}
 
 	preOrder(cb='') {
@@ -158,5 +163,4 @@ function timestwo(n) {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
-tree.inOrder(timestwo)
 prettyPrint(tree.root)
