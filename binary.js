@@ -209,6 +209,24 @@ class Tree {
 			return this.depth(n, root.right, depth += 1)
 		}
 	}
+
+	isBalanced(root=this.root) {
+		if (!root) {
+			return 
+		}
+
+		if (Math.abs(this.height(root.left) - this.height(root.right)) > 1) {
+			return false
+		}
+
+		this.isBalanced(root.left);
+		this.isBalanced(root.right);
+
+		if (this.isBalanced(root.left) == false || this.isBalanced(root.right) == false) {
+			return false;
+		}
+		return true;
+	}
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -230,5 +248,5 @@ function tt(n) {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
-console.log(tree.depth(tree.find(9)))
+console.log(tree.isBalanced())
 prettyPrint(tree.root)
