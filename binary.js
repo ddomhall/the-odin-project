@@ -180,6 +180,21 @@ class Tree {
 
 		return v
 	}
+
+	height(n) {
+		if (!n) {
+			return -1
+		}
+
+		let left = this.height(n.left)
+		let right = this.height(n.right)
+		
+		if (left > right) {
+			return left + 1
+		} else {
+			return right + 1
+		}
+	}
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -201,4 +216,5 @@ function tt(n) {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
+console.log(tree.height(tree.find(8)))
 prettyPrint(tree.root)
