@@ -227,6 +227,10 @@ class Tree {
 		}
 		return true;
 	}
+
+	rebalance() {
+		this.root = this.buildTree(this.levelOrder())
+	}
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -248,5 +252,9 @@ function tt(n) {
 
 tree  = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.root)
+console.log(tree.isBalanced())
+tree.delete(1)
+tree.delete(3)
+tree.rebalance()
 console.log(tree.isBalanced())
 prettyPrint(tree.root)
