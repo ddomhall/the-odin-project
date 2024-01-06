@@ -25,6 +25,20 @@ function createBoard() {
 
 		switch (dir) {
 			case 'up':
+				for (let i = y; i > y - ship.length; i--) {
+					try {
+						if (board[i][x] != 0) throw new Error
+					} catch {
+						valid = false
+					}
+				}
+
+				if (valid) {
+					for (let i = y; i > y - ship.length; i--) {
+						board[i][x] = ship
+					}
+					ship.placed = true
+				}
 			break;
 			case 'right':
 				for (let i = x; i < x + ship.length; i++) {
@@ -43,6 +57,20 @@ function createBoard() {
 				}
 			break;
 			case 'down':
+				for (let i = y; i < y + ship.length; i++) {
+					try {
+						if (board[i][x] != 0) throw new Error
+					} catch {
+						valid = false
+					}
+				}
+
+				if (valid) {
+					for (let i = y; i < y + ship.length; i++) {
+						board[i][x] = ship
+					}
+					ship.placed = true
+				}
 			break;
 			case 'left':
 				for (let i = x; i > x - ship.length; i--) {
@@ -71,9 +99,7 @@ function createBoard() {
 }
 
 const b = createBoard()
-const s1 = createShip(1)
-const s2 = createShip(2)
-b.placeShip(s1, 9, 0, 'left')
-b.placeShip(s2, 7, 0, 'right')
+const s1 = createShip(2)
+b.placeShip(s1, 9, 9, 'up')
 
 module.exports = {createShip, createBoard}
