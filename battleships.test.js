@@ -1,5 +1,5 @@
 describe('battleships', () => {
-	const {createShip, createBoard} = require('./battleships.js')
+	const {createShip, createBoard, createPlayer} = require('./battleships.js')
 
 	test('create ship', () => {
 		const s = createShip(1)
@@ -17,5 +17,12 @@ describe('battleships', () => {
 		expect(b.recieveAttack(0, 1)).toBe('miss')
 		expect(b.recieveAttack(0, 1)).toBe('duplicate')
 		expect(b.shipsSunk()).toBe(true)
+	})
+
+	test('player attacks', () => {
+		const p1 = createPlayer(1, 'ai')
+		const b2 = createBoard()
+		p1.aiAttack()
+		expect(b2.attacks).toEqual([])
 	})
 })

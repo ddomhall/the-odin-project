@@ -101,18 +101,19 @@ function createBoard() {
 	}
 
 	const recieveAttack = (x, y) => {
+		if (x < 0 || x > 9 || y < 0 || y > 9) {
+			return 'out'
+		} else if (attacks.includes(x + ',' + y)) {
+			return 'duplicate'
+		}
+
 		const t = board[y][x]
-		try {
-			if (attacks.includes(x + ',' + y)) {
-				return 'duplicate'
-			} else if (t != 0) {
-				t.hit()
-				return t
-			} else {
-				attacks.push(x + ',' + y)
-				throw new Error
-			}
-		} catch {
+		if (t != 0) {
+			attacks.push(x + ',' + y)
+			t.hit()
+			return t
+		} else {
+			attacks.push(x + ',' + y)
 			return 'miss'
 		}
 	}
@@ -127,14 +128,42 @@ function createBoard() {
 		return allSunk
 	}
 
-	return {board, placeShip, recieveAttack, shipsSunk}
+	return {board, attacks, placeShip, recieveAttack, shipsSunk}
 }
 
-function createPlayer() {
-	return 0
+function createPlayer(name, type='ai') {
+	if (type == 'ai') {
+		const aiAttack = () => {
+			let turn = true
+			let attack
+			while (turn) {
+				let x = Math.trunc(Math.random()*10)
+				let y = Math.trunc(Math.random()*10)
+				console.log(x, y)
+				if (name == 1) {
+					attack = b2.recieveAttack(x, y)
+				} else {
+					attack = b1.recieveAttack(x, y)
+
+				}
+				if (attack != 'out' && attack != 'duplicate') {
+					turn = false
+				}
+			}
+		}
+		return ({name, type, aiAttack})
+	} else {
+		return {name, type}
+	}
 }
 
-const b = createBoard()
-b.recieveAttack(0, 0)
+const b1 = createBoard()
+const b2 = createBoard()
+const p1 = createPlayer(1, 'ai')
+const p2 = createPlayer(2, '')
+p1.aiAttack()
+p1.aiAttack()
+p1.aiAttack()
+console.log(b2.attacks)
 
 module.exports = {createShip, createBoard, createPlayer}
