@@ -20,5 +20,5 @@ test('caesarCipher', () => {
 })
 
 test('analyseArray', () => {
-  expect(analysArray([0, 1, 2])).toBe({average: 1, min: 0, max: 2, length: 3})
+  expect(analyseArray([0, 1, 2])).toEqual({ average: 1, min: 0, max: 2, length: 3 })
 })
