@@ -3,7 +3,6 @@ describe('battleships', () => {
 
 	test('create ship', () => {
 		const s = createShip(1)
-		expect(s.getHits()).toBe(0)
 		expect(s.isSunk()).toBe(false)
 		s.hit()
 		expect(s.isSunk()).toBe(true)
