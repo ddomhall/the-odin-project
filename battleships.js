@@ -10,6 +10,8 @@ function createShip(length) {
 
 function createBoard() {
 	const board = []
+	const attacks = []
+	const ships = []
 	let shipRotation = 'right'
 	for (let i = 0; i < 10; i++) {
 		const row = []
@@ -38,6 +40,7 @@ function createBoard() {
 						board[i][x] = ship
 					}
 					ship.placed = true
+					ships.push(ship)
 				}
 			break;
 			case 'right':
@@ -54,6 +57,7 @@ function createBoard() {
 						board[y][i] = ship
 					}
 					ship.placed = true
+					ships.push(ship)
 				}
 			break;
 			case 'down':
@@ -70,6 +74,7 @@ function createBoard() {
 						board[i][x] = ship
 					}
 					ship.placed = true
+					ships.push(ship)
 				}
 			break;
 			case 'left':
@@ -86,20 +91,50 @@ function createBoard() {
 						board[y][i] = ship
 					}
 					ship.placed = true
+					ships.push(ship)
 				}
 			break;
 			default:
 				console.log('invalid direction')
 			break;
 		}
-		console.log(board)
 	}
 
-	return {placeShip}
+	const recieveAttack = (x, y) => {
+		const t = board[y][x]
+		try {
+			if (attacks.includes(x + ',' + y)) {
+				return 'duplicate'
+			} else if (t != 0) {
+				t.hit()
+				return t
+			} else {
+				attacks.push(x + ',' + y)
+				throw new Error
+			}
+		} catch {
+			return 'miss'
+		}
+	}
+
+	const shipsSunk = () => {
+		let allSunk = true
+		ships.forEach(ship => {
+			if (!ship.isSunk()) {
+				allSunk = false
+			}
+		})
+		return allSunk
+	}
+
+	return {board, placeShip, recieveAttack, shipsSunk}
+}
+
+function createPlayer() {
+	return 0
 }
 
 const b = createBoard()
-const s1 = createShip(2)
-b.placeShip(s1, 9, 9, 'up')
+b.recieveAttack(0, 0)
 
-module.exports = {createShip, createBoard}
+module.exports = {createShip, createBoard, createPlayer}
