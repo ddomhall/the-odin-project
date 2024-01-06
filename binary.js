@@ -250,7 +250,7 @@ function tt(n) {
 	return n * 2
 }
 
-tree  = new Tree([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+const tree  = new Tree([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
 console.log('balanced after init: ', tree.isBalanced())
 console.log('level: ', tree.levelOrder())
 console.log('pre: ', tree.preOrder())
