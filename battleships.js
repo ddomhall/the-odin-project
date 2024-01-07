@@ -140,31 +140,11 @@ function createBoard() {
 }
 
 function createPlayer(name, type) {
-	if (type == 'ai') {
-		const aiAttack = () => {
-			let turn = true
-			let attack
-			while (turn) {
-				let x = Math.trunc(Math.random()*10)
-				let y = Math.trunc(Math.random()*10)
-				if (name == 1) {
-					attack = b2.recieveAttack(x, y)
-				} else {
-					attack = b1.recieveAttack(x, y)
-
-				}
-				if (attack != 'out' && attack != 'duplicate') {
-					turn = false
-				}
-			}
-		}
-		return ({name, type, aiAttack})
-	} else {
-		return {name, type}
-	}
+	return {name, type}
 }
 
 function createGame() {
+	const d = dom()
 	const p1 = createPlayer(1, 'ai')
 	const p2 = createPlayer(2, 'ai')
 	const b1 = createBoard()
@@ -172,6 +152,7 @@ function createGame() {
 	const boards = [b1, b2]
 	const shipOptions = [2, 3, 3, 4, 5]
 	const directions = ['up', 'down', 'left', 'right']
+
 	boards.forEach(board => {
 		shipOptions.forEach(opt => {
 			let valid = false
@@ -184,18 +165,35 @@ function createGame() {
 			}
 		})
 	})
-	const d = dom()
-	b1.recieveAttack(0, 0)
-	b1.recieveAttack(1, 0)
-	b1.recieveAttack(2, 0)
-	b1.recieveAttack(3, 0)
-	b1.recieveAttack(4, 0)
-	b1.recieveAttack(5, 0)
-	b1.recieveAttack(6, 0)
-	b1.recieveAttack(7, 0)
-	b1.recieveAttack(8, 0)
-	b1.recieveAttack(9, 0)
-	d.renderShips(boards)
+
+	let winner = false
+	let player1turn = true
+	while (!winner) {
+		let turn = true
+		let attack
+		while (turn) {
+			let x = Math.trunc(Math.random()*10)
+			let y = Math.trunc(Math.random()*10)
+			if (player1turn) {
+				attack = b2.recieveAttack(x, y)
+			} else {
+				attack = b1.recieveAttack(x, y)
+			}
+
+			if (attack != 'out' && attack != 'duplicate') {
+				turn = false
+			}
+		}
+		d.renderShips(boards)
+
+		if (b1.shipsSunk()) {
+			winner = p2
+		} else if (b2.shipsSunk()) {
+			winner = p1
+		}
+		player1turn = !player1turn
+	}
+	d.boards.insertAdjacentHTML('beforeEnd', winner + ' wins')
 }
 
 function dom() {
