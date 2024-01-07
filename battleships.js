@@ -22,14 +22,14 @@ function createBoard() {
 	}
 
 	const placeShip = (ship, x, y, dir) => {
-		if (ship.placed == true) console.log('already placed')
+		if (ship.placed == true) return false
 		let valid = true
 
 		switch (dir) {
 			case 'up':
 				for (let i = y; i > y - ship.length; i--) {
 					try {
-						if (board[i][x] != 0) throw new Error
+						if (i < 0 || i > 9 || x < 0 || x > 9 || board[i][x] != 0) throw new Error
 					} catch {
 						valid = false
 					}
@@ -48,7 +48,7 @@ function createBoard() {
 			case 'down':
 				for (let i = y; i < y + ship.length; i++) {
 					try {
-						if (board[i][x] != 0) throw new Error
+						if (i < 0 || i > 9 || x < 0 || x > 9 || board[i][x] != 0) throw new Error
 					} catch {
 						valid = false
 					}
@@ -67,7 +67,7 @@ function createBoard() {
 			case 'left':
 				for (let i = x; i > x - ship.length; i--) {
 					try {
-						if (board[y][i] != 0) throw new Error
+						if (i < 0 || i > 9 || y < 0 || y > 9 || board[y][i] != 0) throw new Error
 					} catch {
 						valid = false
 					}
@@ -86,7 +86,7 @@ function createBoard() {
 			case 'right':
 				for (let i = x; i < x + ship.length; i++) {
 					try {
-						if (board[y][i] != 0) throw new Error
+						if (i < 0 || i > 9 || y < 0 || y > 9 || board[y][i] != 0) throw new Error
 					} catch {
 						valid = false
 					}
@@ -147,7 +147,6 @@ function createPlayer(name, type) {
 			while (turn) {
 				let x = Math.trunc(Math.random()*10)
 				let y = Math.trunc(Math.random()*10)
-				console.log(x, y)
 				if (name == 1) {
 					attack = b2.recieveAttack(x, y)
 				} else {
@@ -184,7 +183,6 @@ function createGame() {
 				
 			}
 		})
-		board.board.forEach(row => console.log(row))
 	})
 	const d = dom()
 	d.renderShips(boards)
@@ -196,14 +194,13 @@ function dom() {
 		boards.innerHTML = ""
 		arr.forEach(board => {
 			let build = '<table>'
-			board.board.forEach(row => {
+			for (let i = 0; i < 10; i++) {
 				build += '<tr>'
-				row.forEach(item => {
-					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${item == 0 ? "" : item.length}</td>`
-
-				})
+				for (let j = 0; j < 10; j++) {
+					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${board.board[i][j] == 0 ? "" : board.board[i][j].length}</td>`
+				}
 				build += '</tr>'
-			})
+			}
 			build += '</table><br>'
 			boards.insertAdjacentHTML('beforeEnd', build)
 		})
