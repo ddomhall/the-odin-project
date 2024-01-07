@@ -41,25 +41,10 @@ function createBoard() {
 					}
 					ship.placed = true
 					ships.push(ship)
+					return true
 				}
 			break;
-			case 'right':
-				for (let i = x; i < x + ship.length; i++) {
-					try {
-						if (board[y][i] != 0) throw new Error
-					} catch {
-						valid = false
-					}
-				}
 
-				if (valid) {
-					for (let i = x; i < x + ship.length; i++) {
-						board[y][i] = ship
-					}
-					ship.placed = true
-					ships.push(ship)
-				}
-			break;
 			case 'down':
 				for (let i = y; i < y + ship.length; i++) {
 					try {
@@ -75,8 +60,10 @@ function createBoard() {
 					}
 					ship.placed = true
 					ships.push(ship)
+					return true
 				}
 			break;
+
 			case 'left':
 				for (let i = x; i > x - ship.length; i--) {
 					try {
@@ -92,10 +79,31 @@ function createBoard() {
 					}
 					ship.placed = true
 					ships.push(ship)
+					return true
 				}
 			break;
+
+			case 'right':
+				for (let i = x; i < x + ship.length; i++) {
+					try {
+						if (board[y][i] != 0) throw new Error
+					} catch {
+						valid = false
+					}
+				}
+
+				if (valid) {
+					for (let i = x; i < x + ship.length; i++) {
+						board[y][i] = ship
+					}
+					ship.placed = true
+					ships.push(ship)
+					return true
+				}
+			break;
+
 			default:
-				console.log('invalid direction')
+				return false
 			break;
 		}
 	}
@@ -131,7 +139,7 @@ function createBoard() {
 	return {board, attacks, placeShip, recieveAttack, shipsSunk}
 }
 
-function createPlayer(name, type='ai') {
+function createPlayer(name, type) {
 	if (type == 'ai') {
 		const aiAttack = () => {
 			let turn = true
@@ -157,13 +165,29 @@ function createPlayer(name, type='ai') {
 	}
 }
 
-const b1 = createBoard()
-const b2 = createBoard()
-const p1 = createPlayer(1, 'ai')
-const p2 = createPlayer(2, '')
-p1.aiAttack()
-p1.aiAttack()
-p1.aiAttack()
-console.log(b2.attacks)
+function createGame() {
+	const p1 = createPlayer(1, 'ai')
+	const p2 = createPlayer(2, 'ai')
+	const b1 = createBoard()
+	const b2 = createBoard()
+	const boards = [b1, b2]
+	const shipOptions = [2, 3, 3, 4, 5]
+	const directions = ['up', 'down', 'left', 'right']
+	boards.forEach(board => {
+		shipOptions.forEach(opt => {
+			let valid = false
+			while (!valid) {
+				let placement = board.placeShip(createShip(opt), Math.trunc(Math.random() * 10), Math.trunc(Math.random() * 10), directions[Math.trunc(Math.random() * directions.length)])
+				if (placement) {
+					valid = true
+				}
+				
+			}
+		})
+		board.board.forEach(row => console.log(row))
+	})
+}
+
+createGame()
 
 module.exports = {createShip, createBoard, createPlayer}
