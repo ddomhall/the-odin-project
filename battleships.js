@@ -186,6 +186,29 @@ function createGame() {
 		})
 		board.board.forEach(row => console.log(row))
 	})
+	const d = dom()
+	d.renderShips(boards)
+}
+
+function dom() {
+	const boards = document.getElementById('boards')
+	const renderShips = (arr) => {
+		boards.innerHTML = ""
+		arr.forEach(board => {
+			let build = '<table>'
+			board.board.forEach(row => {
+				build += '<tr>'
+				row.forEach(item => {
+					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${item == 0 ? "" : item.length}</td>`
+
+				})
+				build += '</tr>'
+			})
+			build += '</table><br>'
+			boards.insertAdjacentHTML('beforeEnd', build)
+		})
+	}
+	return {renderShips}
 }
 
 createGame()
