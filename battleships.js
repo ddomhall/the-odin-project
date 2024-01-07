@@ -185,6 +185,16 @@ function createGame() {
 		})
 	})
 	const d = dom()
+	b1.recieveAttack(0, 0)
+	b1.recieveAttack(1, 0)
+	b1.recieveAttack(2, 0)
+	b1.recieveAttack(3, 0)
+	b1.recieveAttack(4, 0)
+	b1.recieveAttack(5, 0)
+	b1.recieveAttack(6, 0)
+	b1.recieveAttack(7, 0)
+	b1.recieveAttack(8, 0)
+	b1.recieveAttack(9, 0)
 	d.renderShips(boards)
 }
 
@@ -197,7 +207,17 @@ function dom() {
 			for (let i = 0; i < 10; i++) {
 				build += '<tr>'
 				for (let j = 0; j < 10; j++) {
-					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${board.board[i][j] == 0 ? "" : board.board[i][j].length}</td>`
+					let content
+					if (board.attacks.includes(j + ',' + i) && board.board[i][j] != 0) {
+						content = board.board[i][j].length + 'x'
+					} else if (board.attacks.includes(j + ',' + i)) {
+						content = 'o'
+					} else if (board.board[i][j] == 0) {
+						content = ""
+					} else {
+						content = board.board[i][j].length
+					}
+					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${content}</td>`
 				}
 				build += '</tr>'
 			}
