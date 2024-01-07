@@ -8,11 +8,11 @@ function createShip(length) {
 	return {length, hit, isSunk}
 }
 
-function createBoard() {
+function createBoard(name) {
 	const board = []
 	const attacks = []
 	const ships = []
-	let shipRotation = 'right'
+
 	for (let i = 0; i < 10; i++) {
 		const row = []
 		for (let j = 0; j < 10; j++) {
@@ -136,22 +136,44 @@ function createBoard() {
 		return allSunk
 	}
 
-	return {board, attacks, placeShip, recieveAttack, shipsSunk}
+	return {name, board, attacks, placeShip, recieveAttack, shipsSunk}
 }
 
 function createPlayer(name, type) {
-	return {name, type}
+	const attack = (board) => {
+		let turn = true
+		while (turn) {
+			let attack
+			let x
+			let y
+			if (type == 'ai') {
+				x = Math.trunc(Math.random()*10)
+				y = Math.trunc(Math.random()*10)
+			} else {
+				x = parseInt(prompt('x'))
+				y = parseInt(prompt('y'))
+			}
+
+			attack = board.recieveAttack(x, y)
+
+			if (attack != 'out' && attack != 'duplicate') {
+				turn = false
+			}
+		}
+	}
+	return {name, type, attack}
 }
 
-function createGame() {
+function createGame(p1t, p2t) {
 	const d = dom()
-	const p1 = createPlayer(1, 'ai')
-	const p2 = createPlayer(2, 'ai')
-	const b1 = createBoard()
-	const b2 = createBoard()
+	const p1 = createPlayer(1, p1t)
+	const p2 = createPlayer(2, p2t)
+	const b1 = createBoard(1)
+	const b2 = createBoard(2)
 	const boards = [b1, b2]
 	const shipOptions = [2, 3, 3, 4, 5]
 	const directions = ['up', 'down', 'left', 'right']
+	d.result('')
 
 	boards.forEach(board => {
 		shipOptions.forEach(opt => {
@@ -169,22 +191,13 @@ function createGame() {
 	let winner = false
 	let player1turn = true
 	while (winner == false) {
-		let turn = true
-		let attack
-		while (turn) {
-			let x = Math.trunc(Math.random()*10)
-			let y = Math.trunc(Math.random()*10)
-			if (player1turn) {
-				attack = b2.recieveAttack(x, y)
-			} else {
-				attack = b1.recieveAttack(x, y)
-			}
-
-			if (attack != 'out' && attack != 'duplicate') {
-				turn = false
-			}
-		}
 		d.renderShips(boards)
+
+		if (p1.type == 'ai' && player1turn) {
+			p1.attack(b2)
+		} else if (p2.type == 'ai' && !player1turn) {
+			p2.attack(b1)
+		}
 
 		if (b1.shipsSunk()) {
 			winner = p2
@@ -193,11 +206,12 @@ function createGame() {
 		}
 		player1turn = !player1turn
 	}
-	d.boards.insertAdjacentHTML('beforeEnd', winner.name + ' wins')
+	d.result(`player ${winner.name} wins`)
 }
 
 function dom() {
 	const boards = document.getElementById('boards')
+	const res = document.getElementById('result')
 	const renderShips = (arr) => {
 		boards.innerHTML = ""
 		arr.forEach(board => {
@@ -215,7 +229,8 @@ function dom() {
 					} else {
 						content = board.board[i][j].length
 					}
-					build += `<td style="border: solid black 1px; width: 20px; height: 20px">${content}</td>`
+					console.log(board)
+					build += `<td style="border: solid black 1px; width: 20px; height: 20px" onclick="board.name.recieveAttack(i, j)">${content}</td>`
 				}
 				build += '</tr>'
 			}
@@ -223,9 +238,16 @@ function dom() {
 			boards.insertAdjacentHTML('beforeEnd', build)
 		})
 	}
-	return {renderShips, boards}
+
+	const result = (str) => {
+		res.innerHTML = str
+	}
+	return {renderShips, boards, result}
 }
 
-createGame()
+document.getElementById('play').addEventListener('click', e => {
+	e.preventDefault()
+	createGame(document.getElementById('p1').value, document.getElementById('p2').value)
+})
 
-module.exports = {createShip, createBoard, createPlayer}
+module.exports = {createShip, createBoard, createPlayer, createGame}

@@ -7,7 +7,21 @@
 	</head>
 	<body>
 	
-		<main id="boards"></main>
+		<form style="display: flex; flex-direction: column; justify-content: center; gap: 10px; width: 100px; margin: auto;">
+			<label for="p1">player 1</label>
+			<select id="p1">
+				<option value="ai">ai</option>
+				<option value="human">human</option>
+			</select>
+			<label for="p2">player 2</label>
+			<select id="p2">
+				<option value="ai">ai</option>
+				<option value="human">human</option>
+			</select>
+			<button type="submit" id="play">play</button>
+		</form>
+		<main id="boards" style="display: flex; flex-direction: row; justify-content: center; gap: 10px; margin: 10px auto 10px auto;"></main>
+		<div id="result" style="text-align: center;"></div>
 		<script src="./battleships.js"></script>
 	</body>
 </html>
