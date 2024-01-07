@@ -168,7 +168,7 @@ function createGame() {
 
 	let winner = false
 	let player1turn = true
-	while (!winner) {
+	while (winner == false) {
 		let turn = true
 		let attack
 		while (turn) {
@@ -193,7 +193,7 @@ function createGame() {
 		}
 		player1turn = !player1turn
 	}
-	d.boards.insertAdjacentHTML('beforeEnd', winner + ' wins')
+	d.boards.insertAdjacentHTML('beforeEnd', winner.name + ' wins')
 }
 
 function dom() {
@@ -223,7 +223,7 @@ function dom() {
 			boards.insertAdjacentHTML('beforeEnd', build)
 		})
 	}
-	return {renderShips}
+	return {renderShips, boards}
 }
 
 createGame()
