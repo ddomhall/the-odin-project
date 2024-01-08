@@ -1,4 +1,5 @@
 * {
+  border: 1px solid white;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -40,27 +41,25 @@ header img {
 #header-info {
   background-color: white;
   height: 500px;
-  padding: 24px;
+  padding: 42px 24px;
+}
+
+h1 {
+  font-size: 64px;
 }
 
 header h1 {
-  padding: 10px 0 10px 0;
-  font-size: 43px;
   color: black;
 }
 
 #header-info p {
-  font-size: 24px;
+  margin-top: 36px;
+  font-size: 28px;
   color: black;
 }
 
 main {
-  margin: 200px 80px;
-}
-
-main h1 {
-  color: white;
-  font-size: 64px;
+  margin: 160px 80px;
 }
 
 #grid {
@@ -85,7 +84,7 @@ main h1 {
 
 .card-body {
   background-color: grey;
-  height: auto;
+  height: 220px;
   padding: 20px;
 }
 
@@ -96,4 +95,23 @@ main h1 {
 
 .card-body p {
   font-size: 22px;
+}
+
+footer {
+  padding: 0px 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#footer-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 40px;
+  font-size: 28px;
+}
+
+#footer-image {
+  width: 850px;
+  height: 650px;
 }
