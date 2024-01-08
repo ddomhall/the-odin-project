@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: white;
 }
 
 body {
@@ -30,7 +31,7 @@ header img {
 #name {
   position: absolute;
   bottom: 0;
-  width: 550px;
+  width: 650px;
   text-align: center;
   color: white;
   font-size: 64px;
@@ -42,15 +43,57 @@ header img {
   padding: 24px;
 }
 
-h1 {
+header h1 {
   padding: 10px 0 10px 0;
   font-size: 43px;
+  color: black;
 }
 
 #header-info p {
   font-size: 24px;
+  color: black;
 }
 
 main {
-  height: 1000px;
+  margin: 200px 80px;
+}
+
+main h1 {
+  color: white;
+  font-size: 64px;
+}
+
+#grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.card {
+  height: 550px;
+  width: 450px;
+}
+
+.card-image {
+  background-color: darkgrey;
+  height: 330px;
+  font-size: 62px;
+  text-align: center;
+  padding-top: 75px;
+}
+
+.card-body {
+  background-color: grey;
+  height: auto;
+  padding: 20px;
+}
+
+.card-body h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.card-body p {
+  font-size: 22px;
 }
