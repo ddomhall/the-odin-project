@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+#header-bg {
+  height: 60px;
+  background-color: orange;
+  transform: rotate(-10deg) scale(1500%);
+}
