@@ -10,7 +10,7 @@ body {
 }
 
 header {
-  background: linear-gradient(168deg, orange 65%, black 66%);
+  background: linear-gradient(169deg, orange 66.8%, black 67%);
   height: 790px;
   padding: 70px;
   display: flex;
@@ -51,7 +51,7 @@ header h1 {
 }
 
 main {
-  margin: 160px 80px;
+  margin: 160px 100px;
 }
 
 #grid {
@@ -91,7 +91,7 @@ main {
 
 footer {
   background-color: orange;
-  padding: 80px;
+  padding: 100px;
   display: flex;
   justify-content: space-between;
 }
