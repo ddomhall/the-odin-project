@@ -7,6 +7,10 @@
   color: white;
 }
 
-input {
+form {
+  @apply flex flex-col gap-6 w-96
+}
+
+input, textarea {
   @apply ring ring-white rounded-xl px-2
 }
