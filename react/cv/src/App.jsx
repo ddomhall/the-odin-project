@@ -22,6 +22,7 @@ function App() {
         <input name="number" placeholder="number" type="tel" required/>
         <input type="submit" value="Submit"/>
       </form>
+      {data.map(i => <section><div>name: {i.name}</div><div>email: {i.email}</div><div>number: {i.number}</div></section>)}
     </>
   )
 }

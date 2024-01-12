@@ -11,6 +11,6 @@ form {
   @apply flex flex-col gap-6 w-96
 }
 
-input, textarea {
+input, textarea, section {
   @apply ring ring-white rounded-xl px-2
 }
