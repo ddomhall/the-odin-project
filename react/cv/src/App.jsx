@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 function App() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState({name: '', email: '', number: ''})
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -10,19 +10,20 @@ function App() {
     for (let [key, value] of formData.entries()) {
       obj[key] = value
     }
-    setData([...data, obj])
+    setData(obj)
     e.currentTarget.reset()
   }
 
   return (
     <>
+      {data.name != '' ? <section><div>name: {data.name}</div><div>email: {data.email}</div><div>number: {data.number}</div><button>Edit</button></section> : 
       <form id="general" onSubmit={handleSubmit}>
         <input name="name" placeholder="name" required/>
         <input name="email" placeholder="email" type="email" required/>
         <input name="number" placeholder="number" type="tel" required/>
-        <input type="submit" value="Submit"/>
+        <button>Submit</button>
       </form>
-      {data.map(i => <section><div>name: {i.name}</div><div>email: {i.email}</div><div>number: {i.number}</div></section>)}
+      }
     </>
   )
 }
