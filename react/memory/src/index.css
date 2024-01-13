@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  color-scheme: dark;
+  background-color: black;
+  color: white;
+}
