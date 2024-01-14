@@ -19,6 +19,10 @@ export default function App() {
   //   });
   // }, [])
 
+  useEffect(() => {
+    setImages(images.sort((a, b) => 0.5 - Math.random()))
+  }, [scores.score])
+
   const handleClick = (e) => {
     if (clicked.includes(e.target.src)) {
       setScores({score: 0, best: scores.score > scores.best ? scores.score : scores.best})
