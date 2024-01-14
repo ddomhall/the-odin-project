@@ -13,7 +13,6 @@ export default function App() {
       promises.push(fetch('https://api.giphy.com/v1/gifs/random?api_key=39BVPnodKgEtMeqYkH4A65OWGayOHJGg&tag=&rating=g', {mode: 'cors'}))
     }
 
-
     const res = await Promise.all(promises)
     const data = await Promise.all(res.map(r => r.json()))
       .then(res => res.map(i => newImages.push({img: i.data.images.fixed_height.url, key: Math.random()})))
