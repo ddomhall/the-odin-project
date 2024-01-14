@@ -6,6 +6,6 @@ export default class Count extends Component {
   }
 
   render() {
-    return <div>{this.props.count}</div>
+    return <div>Count: {this.props.count}</div>
   }
 }

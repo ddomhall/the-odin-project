@@ -13,6 +13,8 @@ export default class ClassInput extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this)
   }
 
   handleInputChange(e) {
@@ -25,15 +27,22 @@ export default class ClassInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState((state) => ({
-      todos: state.todos.concat(state.inputVal),
+      todos: state.todos.concat({todo: state.inputVal, edit: true, id: Math.random()}),
       inputVal: "",
     }));
   }
 
   deleteTodo(e) {
     this.setState(state => ({
-      todos: state.todos.filter(i => i != e.target.previousSibling.textContent),
-      inputVal: state.inputVal
+      ...state,
+      todos: state.todos.filter(i => i.id != e.target.parentElement.dataset.value)
+    }))
+  }
+
+  toggleEdit(e) {
+    this.setState(state => ({
+      ...state,
+      todos: state.todos.map(t => t.id == e.target.parentElement.dataset.value ? {todo: t.todo, edit: !t.edit, id: t.id} : t)
     }))
   }
 
@@ -55,8 +64,9 @@ export default class ClassInput extends Component {
         <Count count={this.state.todos.length}/>
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo}>
-              <p>{todo}</p>
+            <li key={todo.id} data-value={todo.id}>
+              {todo.edit ? <input defaultValue={todo.todo}/> : <p>{todo.todo}</p>}
+              {todo.edit ? <button onClick={this.toggleEdit}>resubmit</button> : <button onClick={this.toggleEdit}>edit</button>}
               <button onClick={this.deleteTodo}>delete</button>
             </li>
           ))}
