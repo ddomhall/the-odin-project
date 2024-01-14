@@ -14,7 +14,7 @@ export default class ClassInput extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this)
     this.toggleEdit = this.toggleEdit.bind(this)
-    this.toggleEdit = this.toggleEdit.bind(this)
+    this.changeTodo = this.changeTodo.bind(this)
   }
 
   handleInputChange(e) {
@@ -27,7 +27,7 @@ export default class ClassInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState((state) => ({
-      todos: state.todos.concat({todo: state.inputVal, edit: true, id: Math.random()}),
+      todos: state.todos.concat({todo: state.inputVal, edit: false, id: Math.random()}),
       inputVal: "",
     }));
   }
@@ -35,7 +35,7 @@ export default class ClassInput extends Component {
   deleteTodo(e) {
     this.setState(state => ({
       ...state,
-      todos: state.todos.filter(i => i.id != e.target.parentElement.dataset.value)
+      todos: state.todos.filter(t => t.id != e.target.parentElement.dataset.value)
     }))
   }
 
@@ -43,6 +43,13 @@ export default class ClassInput extends Component {
     this.setState(state => ({
       ...state,
       todos: state.todos.map(t => t.id == e.target.parentElement.dataset.value ? {todo: t.todo, edit: !t.edit, id: t.id} : t)
+    }))
+  }
+
+  changeTodo(e) {
+    this.setState(state => ({
+      ...state,
+      todos: state.todos.map(t => t.id == e.target.parentElement.dataset.value ? {todo: e.target.value, edit: true, id: t.id} : t)
     }))
   }
 
@@ -65,7 +72,7 @@ export default class ClassInput extends Component {
         <ul>
           {this.state.todos.map((todo) => (
             <li key={todo.id} data-value={todo.id}>
-              {todo.edit ? <input defaultValue={todo.todo}/> : <p>{todo.todo}</p>}
+              {todo.edit ? <input value={todo.todo} onChange={this.changeTodo}/> : <p>{todo.todo}</p>}
               {todo.edit ? <button onClick={this.toggleEdit}>resubmit</button> : <button onClick={this.toggleEdit}>edit</button>}
               <button onClick={this.deleteTodo}>delete</button>
             </li>
