@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
-
 export default function Shopping() {
-  return <Link to='/'>Home</Link>
+  return (
+    <>
+      <h1>Shopping</h1>
+    </>
+  )
 }
