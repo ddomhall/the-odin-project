@@ -4,8 +4,8 @@ export default function App() {
   return (
     <div className="h-screen">
       <nav className="flex justify-evenly">
-        <Link to='/' draggable='false'>Home</Link>
-        <Link to='/shopping' draggable='false'>Shopping</Link>
+        <Link to='/' draggable='false'>home</Link>
+        <Link to='/shopping' draggable='false'>shopping</Link>
       </nav>
       <Outlet />
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Item from './Item'
 
 export default function Shopping() {
+  const [cart, setCart] = useState([])
   const [items, setItems] = useState([
     {
       name: 'item1',
@@ -21,17 +22,23 @@ export default function Shopping() {
   ]
   )
 
+  function addToCart(e) {
+    setCart([...cart, items.find(i => i.id == e.target.parentElement.dataset.value)])
+  }
+
   return (
     <div className="grid grid-cols-5 h-[calc(100vh-24px)]">
       <div className="col-span-4 flex flex-wrap gap-6 p-6">
-        {items.map(i => <Item key={i.id} info={i} />)}
+        {items.map(i => <Item key={'i' + i.id} i={i} f={addToCart}/>)}
       </div>
       <aside className="col-span-1 flex flex-col justify-between">
         <div>
-          <h1>Cart</h1>
-          <section>items</section>
+          <h1>cart</h1>
+          <section>
+            {cart.map(i => <div key={'c'+i.id}>{i.name}</div>)}
+          </section>
         </div>
-        <button>Check Out</button>
+        <button>check Out</button>
       </aside>
     </div>
   )
