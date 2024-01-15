@@ -6,5 +6,5 @@
 	color-scheme: dark;
 	background-color: black;
 	color: white;
-	border: 1px solid white;
+	box-shadow: inset 0px 0px 0px 1px white;
 }

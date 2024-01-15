@@ -1,7 +1,38 @@
+import { useState, useEffect } from 'react'
+import Item from './Item'
+
 export default function Shopping() {
+  const [items, setItems] = useState([
+    {
+      name: 'item1',
+      price: 1.00,
+      id: 1,
+    },
+    {
+      name: 'item2',
+      price: 2.00,
+      id: 2,
+    },
+    {
+      name: 'item3',
+      price: 3.00,
+      id: 3,
+    },
+  ]
+  )
+
   return (
-    <>
-      <h1>Shopping</h1>
-    </>
+    <div className="grid grid-cols-5 h-[calc(100vh-24px)]">
+      <div className="col-span-4 flex flex-wrap gap-6 p-6">
+        {items.map(i => <Item key={i.id} info={i} />)}
+      </div>
+      <aside className="col-span-1 flex flex-col justify-between">
+        <div>
+          <h1>Cart</h1>
+          <section>items</section>
+        </div>
+        <button>Check Out</button>
+      </aside>
+    </div>
   )
 }
