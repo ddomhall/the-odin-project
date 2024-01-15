@@ -12,10 +12,10 @@ export default function Item({i, f}) {
   }
 
   return (
-    <div data-value={i.id} className='flex flex-col w-32 h-32'>
+    <div className='flex flex-col w-32 h-32' data-value={i.id}>
       <div>name: {i.name}</div>
       <div>price: {i.price}</div>
-      <div className='flex justify-evenly'>
+      <div className='flex justify-evenly' data-value={quantity}>
         <button className='w-full' onClick={subQuantity}>-</button>
         <div className='w-full text-center'>{quantity}</div>
         <button className='w-full' onClick={addQuantity}>+</button>

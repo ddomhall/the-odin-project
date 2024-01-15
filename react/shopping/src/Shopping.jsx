@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Item from './Item'
+import CartItem from './CartItem'
 
 export default function Shopping() {
   const [cart, setCart] = useState([])
@@ -23,7 +24,7 @@ export default function Shopping() {
   )
 
   function addToCart(e) {
-    setCart([...cart, items.find(i => i.id == e.target.parentElement.dataset.value)])
+    setCart([...cart, {item: items.find(i => i.id == e.target.parentElement.dataset.value), quantity: e.target.previousSibling.dataset.value}])
   }
 
   return (
@@ -35,7 +36,7 @@ export default function Shopping() {
         <div>
           <h1>cart</h1>
           <section>
-            {cart.map(i => <div key={'c'+i.id}>{i.name}</div>)}
+            {cart.map(i => <CartItem key={'c' + i.item.id} i={i} />)}
           </section>
         </div>
         <button>check Out</button>
