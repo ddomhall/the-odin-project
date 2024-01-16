@@ -26,6 +26,7 @@ export default function Shopping() {
   function addToCart(e) {
     let item = items.find(i => i.id == e.target.parentElement.dataset.value)
     let quantity = parseInt(e.target.previousSibling.dataset.value)
+
     if (cart.some(i => i.item == item)) {
       setCart(cart.map(i => i.item == item ? {item: i.item, quantity: i.quantity + quantity} : i))
     } else {
