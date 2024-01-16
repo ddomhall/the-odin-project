@@ -8,7 +8,7 @@ export default function Item({i, f}) {
       <div>name: {i.name}</div>
       <div>price: {i.price}</div>
       <div className='flex' data-value={quantity}>
-        <label for={'q' + i.id}>quantity: </label>
+        <label htmlFor={'q' + i.id}>quantity: </label>
         <input id={'q' + i.id} className='w-full text-center' type='number' value={quantity} onChange={e => setQuantity(e.target.value)}/>
       </div>
       <button onClick={f}>add to cart</button>
