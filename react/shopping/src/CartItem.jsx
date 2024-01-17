@@ -1,8 +1,9 @@
 export default function cartItem({i}) {
   return (
   <>
-      <div>name: {i.item.name}</div>
+      <div>title: {i.item.title}</div>
       <div>quantity: {i.quantity}</div>
+      <div>price: {i.item.price * i.quantity}</div>
   </>
   )
 }

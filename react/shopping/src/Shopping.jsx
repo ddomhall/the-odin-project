@@ -4,24 +4,14 @@ import CartItem from './CartItem'
 
 export default function Shopping() {
   const [cart, setCart] = useState([])
-  const [items, setItems] = useState([
-    {
-      name: 'item1',
-      price: 1.00,
-      id: 1,
-    },
-    {
-      name: 'item2',
-      price: 2.00,
-      id: 2,
-    },
-    {
-      name: 'item3',
-      price: 3.00,
-      id: 3,
-    },
-  ]
-  )
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products?limit=5')
+      .then(res=>res.json())
+      .then(json=>setItems(json))
+      .catch((error) => console.error(error));
+  }, [])
 
   function addToCart(e) {
     let item = items.find(i => i.id == e.target.parentElement.dataset.value)
@@ -34,19 +24,23 @@ export default function Shopping() {
     }
   }
 
+  function checkOut() {
+    setCart([])
+  }
+
   return (
-    <div className="grid grid-cols-5 h-[calc(100vh-24px)]">
-      <div className="col-span-4 flex flex-wrap gap-6 p-6">
+    <div className='flex'>
+      <div className="flex flex-wrap justify-center gap-6 p-6 mr-36 w-full">
         {items.map(i => <Item key={'i' + i.id} i={i} f={addToCart}/>)}
       </div>
-      <aside className="col-span-1 flex flex-col justify-between">
+      <aside className="flex flex-col justify-between fixed right-0 w-36 mt-6 h-[calc(100vh-24px)]">
         <div>
           <h1>cart</h1>
-          <section>
+          <section className='overflow-y-scroll'>
             {cart.map(i => <CartItem key={'c' + i.item.id} i={i} />)}
           </section>
         </div>
-        <button>check Out</button>
+        <button onClick={checkOut}>check Out</button>
       </aside>
     </div>
   )

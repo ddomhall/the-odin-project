@@ -9,8 +9,10 @@ export default function Item({i, f}) {
   }
 
   return (
-    <div className='flex flex-col w-32 h-24' data-value={i.id}>
-      <div>name: {i.name}</div>
+    <div className='flex flex-col w-56 h-min' data-value={i.id}>
+      <img src={i.image} className='h-56'/>
+      <div>title: {i.title}</div>
+      <div>description: {i.description}</div>
       <div>price: {i.price}</div>
       <div className='flex' data-value={quantity}>
         <label htmlFor={'q' + i.id}>quantity: </label>
