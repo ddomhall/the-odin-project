@@ -7,7 +7,7 @@ export default function Shopping() {
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=5')
+    fetch('https://fakestoreapi.com/products?limit=10')
       .then(res=>res.json())
       .then(json=>setItems(json))
       .catch((error) => console.error(error));
@@ -36,7 +36,7 @@ export default function Shopping() {
       <aside className="flex flex-col justify-between fixed right-0 w-36 mt-6 h-[calc(100vh-24px)]">
         <div>
           <h1>cart</h1>
-          <section className='overflow-y-scroll'>
+          <section className='overflow-y-scroll max-h-[calc(100vh-72px)]'>
             {cart.map(i => <CartItem key={'c' + i.item.id} i={i} />)}
           </section>
         </div>
