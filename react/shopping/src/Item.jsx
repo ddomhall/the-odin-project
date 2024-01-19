@@ -16,7 +16,7 @@ export default function Item({i, f}) {
       <div data-testid='i-price'>price: {i.price}</div>
       <div className='flex' data-value={quantity}>
         <label htmlFor={'q' + i.id}>quantity: </label>
-        <input id={'q' + i.id} className='w-full text-center' type='number' min='1' value={quantity} onChange={e => setQuantity(e.target.value)}/>
+        <input data-testid='i-quantity' id={'q' + i.id} className='w-full text-center' type='number' min='1' value={quantity} onChange={e => setQuantity(parseInt(e.target.value))}/>
       </div>
       <button onClick={handleClick}>add to cart</button>
     </div>
