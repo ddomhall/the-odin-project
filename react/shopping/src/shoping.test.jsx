@@ -27,4 +27,18 @@ describe('item', () => {
 
     expect(onClick).toHaveBeenCalled()
   })
+
+  it('renders all data', () => {
+    const props = {id: 1, title: 'title1', description: 'desc1', image: 'image1', price: 1}
+    const onClick = vi.fn();
+    const user = userEvent.setup()
+
+    render(<Item i={props} f={onClick} />)
+
+    expect(screen.getByTestId('i-title').textContent).toMatch('title1')
+    expect(screen.getByTestId('i-desc').textContent).toMatch('desc1')
+    expect(screen.getByTestId('i-image').src).toMatch('image1')
+    expect(screen.getByTestId('i-price').textContent).toMatch('1')
+
+  })
 })
