@@ -1,27 +1,9 @@
-const http = require('http')
-const fs = require('fs')
+const express = require('express')
+const app = express()
 
-http.createServer(function (req, res) {
-	switch (req.url) {
-		case '/':
-			renderPath('index.html', 200)
-		break;
-		case '/about':
-			renderPath('about.html', 200)
-		break;
-		case '/contact':
-			renderPath('contact.html', 200)
-		break;
-		default:
-			renderPath('404.html', 404)
-		break;
-	}
+app.get('/', (req, res) => res.send('index'))
+app.get('/about', (req, res) => res.send('about'))
+app.get('/contact', (req, res) => res.send('contact'))
+app.use((req, res, next) => res.status(404).send("404"))
 
-	function renderPath(file, status) {
-		fs.readFile(file, function(err, data) {
-			res.writeHead(status, {'Content-Type': 'text/html'});
-			res.write(data);
-			return res.end();
-		})
-	}
-}).listen(8080)
+app.listen(3000)
