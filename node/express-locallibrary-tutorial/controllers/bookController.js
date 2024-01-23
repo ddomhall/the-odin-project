@@ -178,10 +178,12 @@ exports.book_delete_post = asyncHandler(async (req, res, next) => {
     BookInstance.find({ book: req.params.id }, "_id").exec(),
   ]);
 
-  if (BookInstance.length > 0) {
+  console.log(book, allBookInstances)
+
+  if (allBookInstances.length > 0) {
     // Author has books. Render in same way as for GET route.
-    res.render("author_delete", {
-      title: "Delete Author",
+    res.render("book_delete", {
+      title: "Delete Book",
       book: book,
       book_instances: allBookInstances,
     });
