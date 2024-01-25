@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	h1= category.name
+	p= category.description
+
+	h2 books
+	each i in books
+		dl
+			dt
+				a(href=i.url) #{i.name}
+			dd= i.description
