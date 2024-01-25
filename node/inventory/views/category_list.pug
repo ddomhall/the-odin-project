@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1= title
+	dl
+		each val in category_list
+			dt
+				a(href=val.url) #{val.name}
+			dd= val.description
