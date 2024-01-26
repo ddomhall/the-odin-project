@@ -19,16 +19,35 @@ exports.category_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_create_get = (req, res, next) => {
-  res.send('not implemented')
+  res.render('category_form', {title: 'Create Category'})
 };
 
-exports.category_create_post = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
-});
+exports.category_create_post = [
+  body("name", "empty name")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("description", "empty description")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
 
-//exports.category_create_post = [
-//  res.send('not implemented')
-//];
+  asyncHandler(async(req, res, next) => {
+    const errors = validationResult(req)
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description
+    })
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {title: 'Create Catgory', category: category, errors: errors.array()})
+    } else {
+      category.save()
+      res.redirect(category.url)
+    }
+  })
+];
 
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
   res.send('not implemented')

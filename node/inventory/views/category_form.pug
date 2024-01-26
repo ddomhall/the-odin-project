@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	h1=title
+
+	if errors
+		ul
+			for e in errors
+				li(style='color: red;') #{e.msg}
+
+	form(method='post' style='display: flex; flex-direction: column;')
+		input(name='name' placeholder='name' value= category ? category.name : '' required)
+		input(name='description' placeholder='desciption' value= category ? category.description : '' required)
+		input(type='submit')

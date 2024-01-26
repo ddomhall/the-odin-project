@@ -5,8 +5,17 @@ block content
 	p= category.description
 
 	h2 books
-	each i in books
-		dl
-			dt
-				a(href=i.url) #{i.name}
-			dd= i.description
+	if books.length
+		each i in books
+			dl
+				dt
+					a(href=i.url) #{i.name}
+				dd= i.description
+	else
+		p no books
+	
+	hr
+
+	a(href=category.url + '/update') update
+	br
+	a(href=category.url + '/delete') delete
