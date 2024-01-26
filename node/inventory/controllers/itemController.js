@@ -18,13 +18,50 @@ exports.item_create_get = asyncHandler(async(req, res, next) => {
   res.render('item_form', {title: 'Create Item', categories: categories})
 });
 
-exports.item_create_post = (req, res, next) => {
-  res.send('not implemented')
-};
+exports.item_create_post = [
 
-//exports.item_create_post = [
-//  res.send('not implemented')
-//];
+  body("name", "empty name")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("description", "empty description")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("category", "empty category")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("price", "empty price")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("quantity", "empty quantity")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const item = new Item({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: req.body.price,
+      quantity: req.body.quantity,
+    });
+
+    if (!errors.isEmpty()) {
+      categories = await Categories.find().sort({name: 1}).exec()
+      res.render('item_form', {title: 'Create Item', item: item, categories: categories, errors: errors.array()})
+
+    } else {
+      await item.save();
+      res.redirect(item.url);
+    }
+  }),
+];
 
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
   res.send('not implemented')
@@ -35,7 +72,9 @@ exports.item_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  item = await Item.findOne().exec()
+  categories = await Categories.find().sort({name: 1}).exec()
+  res.render('item_form', {title: 'Update Item', item: item, categories: categories})
 });
 
 exports.item_update_post = asyncHandler(async (req, res, next) => {
