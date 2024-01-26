@@ -58,14 +58,35 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  const category = await Category.findById(req.params.id).exec()
+  res.render('category_form', {title: 'Update Category', category: category})
 });
 
-exports.category_update_post = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
-});
+exports.category_update_post = [
+  body("name", "empty name")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
+  body("description", "empty description")
+  .trim()
+  .isLength({ min: 1 })
+  .escape(),
 
-// exports.category_update_post = [
-//   res.send('not implemented')
-// ];
+  asyncHandler(async(req, res, next) => {
+    const errors = validationResult(req)
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id
+    })
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {title: 'Create Catgory', category: category, errors: errors.array()})
+    } else {
+      await Category.findByIdAndUpdate(req.params.id, category)
+      res.redirect(category.url)
+    }
+  })
+];
 
