@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1= title
+	dl
+		each i in items
+			dt
+				a(href=i.url) #{i.name}
+			dl= i.description
