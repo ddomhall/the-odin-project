@@ -64,11 +64,13 @@ exports.item_create_post = [
 ];
 
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  const item = await Item.findById(req.params.id).exec()
+  res.render('item_delete', {title: 'Delete Item', item: item})
 });
 
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  await Item.findByIdAndDelete(req.params.id).exec()
+  res.redirect('/items')
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {

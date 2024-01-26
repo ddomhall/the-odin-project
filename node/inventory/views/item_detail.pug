@@ -6,3 +6,9 @@ block content
 	p= item.category.name
 	p= item.price
 	p= item.quantity
+	
+	hr
+	
+	a(href=item.url + '/update') update
+	br
+	a(href=item.url + '/delete') delete
