@@ -3,5 +3,8 @@ extends layout
 block content
 	h1= title
 	p= item.name
-	form(method='post')
+	if error
+		p(style='color: red;') #{error}
+	form(method='post' style='display: flex; flex-direction: column;')
+		input(name='pw' type='password' placeholder='password')
 		input(type='submit' value='delete')

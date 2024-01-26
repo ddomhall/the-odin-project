@@ -2,6 +2,7 @@ extends layout
 
 block content
 	h1= title
+	p= category.name
 
 	if items.length
 		p existing items
@@ -9,5 +10,8 @@ block content
 			li
 				a(href=i.url) #{i.name}
 	else
+		if error
+			p(style='color: red;') #{error}
 		form(method='post')
+			input(name='pw' type='password' placeholder='password')
 			input(type='submit' value='delete')

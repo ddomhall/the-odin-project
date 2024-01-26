@@ -74,8 +74,13 @@ exports.item_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-  await Item.findByIdAndDelete(req.params.id).exec()
-  res.redirect('/items')
+  if (req.body.pw == 'pw') {
+    await Item.findByIdAndDelete(req.params.id).exec()
+    res.redirect('/items')
+  } else {
+    const item = await Item.findById(req.params.id)
+    res.render('item_delete', {title: 'Delete Item', item: item, error: 'Incorrect pasword'})
+  }
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {

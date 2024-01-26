@@ -6,7 +6,7 @@ const Item = require("../models/item");
 exports.category_list = asyncHandler(async (req, res, next) => {
   const allCategories = await Category.find().sort({name: 1}).exec()
 
-  res.render('category_list', {title: 'Category List', category_list: allCategories})
+  res.render('category_list', {title: 'All Categories', category_list: allCategories})
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
@@ -57,8 +57,15 @@ exports.category_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-  await Category.findByIdAndDelete(req.params.id).exec()
-  res.redirect('/categories')
+  if (req.body.pw == 'pw') {
+    await Category.findByIdAndDelete(req.params.id).exec()
+    res.redirect('/categories')
+  } else {
+    const [category, items] = await Promise.all([
+      Category.findById(req.params.id).exec(),
+      Item.find({category: req.params.id}).exec()])
+    res.render('category_delete', {title: 'Delete Category', category: category, items: items, error: 'Incorrect password'})
+  }
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
