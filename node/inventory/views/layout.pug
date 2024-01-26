@@ -1,7 +1,18 @@
 doctype html
-html
+html(lang='en')
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+  body(style='display: flex;')
+    aside(style='min-width: 200px;')
+      ul(class='sidebar-nav')
+        li
+          a(href='/categories') All categories
+        li
+          a(href='/items') All items
+        hr
+        li
+          a(href='/categories/create') Create new category
+        li
+          a(href='/items/create') Create new item
+    main
+      block content
