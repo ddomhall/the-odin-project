@@ -1,5 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const multer  = require('multer')
+const upload = multer({ dest: 'public/' })
 const Item = require("../models/item");
 const Categories = require("../models/category");
 
@@ -19,6 +21,8 @@ exports.item_create_get = asyncHandler(async(req, res, next) => {
 });
 
 exports.item_create_post = [
+
+  upload.single('image'),
 
   body("name", "empty name")
   .trim()
@@ -50,6 +54,7 @@ exports.item_create_post = [
       category: req.body.category,
       price: req.body.price,
       quantity: req.body.quantity,
+      image: req.file.filename
     });
 
     if (!errors.isEmpty()) {
