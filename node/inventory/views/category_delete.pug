@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1= title
+
+	if items.length
+		p existing items
+		each i in items
+			li
+				a(href=i.url) #{i.name}
+	else
+		form(method='post')
+			input(type='submit' value='delete')

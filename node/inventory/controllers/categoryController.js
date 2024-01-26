@@ -50,11 +50,15 @@ exports.category_create_post = [
 ];
 
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  const [category, items] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({category: req.params.id}).exec()])
+  res.render('category_delete', {title: 'Delete Category', category: category, items: items})
 });
 
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-  res.send('not implemented')
+  await Category.findByIdAndDelete(req.params.id).exec()
+  res.redirect('/categories')
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
