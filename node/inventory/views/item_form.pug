@@ -15,8 +15,8 @@ block content
 				if item
 					if item.category==c._id.toString()
 						option(value=c._id, selected) #{c.name}
-				else
-					option(value=c._id) #{c.name}
+						-continue
+				option(value=c._id) #{c.name}
 		input(name='price', placeholder='price', value=item ? item.price : '', type='number', step='0.01', required)
 		input(name='quantity', placeholder='quantity', value=item ? item.quantity : '', type='number', required)
 		input(type='submit')
