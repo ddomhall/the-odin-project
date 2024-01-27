@@ -7,15 +7,15 @@
 	</head>
 	<body>
 		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black'>
-			<h3><a href='/'>clubhouse</a></h3>
-			<ul style='display: flex; gap: 10px; list-style-type: none;'>
+			<a href='/'>clubhouse</a>
+			<div style='display: flex; gap: 10px; list-style-type: none;'>
 				<% if (session) { %>
-				<li><a href='/logout'>logout</a></li>
+				<a href='/logout'>logout</a>
 				<% } else { %>
-				<li><a href='/signup'>sign up</a></li>
-				<li><a href='/login'>log in</a></li>
+				<a href='/signup'>sign up</a>
+				<a href='/login'>log in</a>
 				<% } %>
-			</ul>
+			</div>
 		</nav>
 		messages
 	</body>

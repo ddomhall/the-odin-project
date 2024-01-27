@@ -11,9 +11,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 const User = mongoose.model(
   "User",
   new Schema({
-    fname: { type: String, required: true },
-    lname: { type: String, required: true },
-    email: { type: String, required: true },
+    username: { type: String, required: true },
     pw: { type: String, required: true },
     member: { type: Boolean, required: true },
   })
@@ -29,13 +27,11 @@ let session = false
 
 app.get('/', (req, res, next) => res.render('index', {session}))
 
-app.get('/signup', (req, res, next) => res.render('signup', {session, user: {fname: '', lname: '', email: ''}, errors:''}))
+app.get('/signup', (req, res, next) => res.render('signup', {session, user: {username: ''}, errors:''}))
 
 app.post('/signup', [
 
-	body('fname', 'first name empty').trim().notEmpty().escape(),
-	body('lname', 'last name empty').trim().notEmpty().escape(),
-	body('email', 'invalid email').trim().isEmail().escape(),
+	body('username', 'username empty').trim().notEmpty().escape(),
 	body('pw', 'invalid password').trim().isLength({min: 3}).escape(),
 	body('cpw', 'passwords must match').custom((value, {req}) => {
 		return value === req.body.pw
@@ -45,9 +41,7 @@ app.post('/signup', [
 		const errors = validationResult(req).array()
 
 		const user = new User({
-			fname: req.body.fname,
-			lname: req.body.lname,
-			email: req.body.email,
+			username: req.body.username,
 			pw: req.body.pw,
 			member: false
 		})
@@ -61,6 +55,6 @@ app.post('/signup', [
 	}
 ])
 
-app.get('/login', (req, res, next) => res.render('login', {session, user}))
+app.get('/login', (req, res, next) => res.render('login', {session, user: {username: ''}}))
 
 app.listen(3000, () => console.log("listening on :3000"));

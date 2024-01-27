@@ -7,24 +7,16 @@
 	</head>
 	<body>
 		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black; margin-bottom: 15px;'>
-			<h3><a href='/'>clubhouse</a></h3>
-			<ul style='display: flex; gap: 10px; list-style-type: none;'>
-				<% if (session) { %>
-				<li><a href='/logout'>logout</a></li>
-				<% } else { %>
-				<li><a href='/signup'>sign up</a></li>
-				<li><a href='/login'>log in</a></li>
-				<% } %>
+			<a href='/'>clubhouse</a>
+			<a href='/login'>log in</a>
 			</ul>
 		</nav>
 		<main style='width: 300px; margin: auto; text-align: center;'>
 			<form method='post' style='display: flex; flex-direction: column; gap: 10px;'>
-				<input name="fname" placeholder="first name" value=<%= user.fname %>>
-				<input name="lname" placeholder="last name" value=<%= user.lname %>>
-				<input name="email" placeholder='email' type="email" value=<%= user.email %>>
+				<input name="username" placeholder="username" value=<%= user.username %>>
 				<input name="pw" placeholder='password'type="password" >
 				<input name="cpw" placeholder='confirm password'type="password" >
-				<input type="submit" value="submit">
+				<input type="submit" value="sign up">
 			</form>
 			<% if (errors) { %>
 				<% errors.forEach(function(e) { %>
