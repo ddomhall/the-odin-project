@@ -7,7 +7,9 @@ const bcrypt = require("bcryptjs")
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const mongoDb = "mongodb+srv://admin:wDWS0BDjljhM23Vc@cluster0.ty3uuu8.mongodb.net/passport?retryWrites=true&w=majority";
+require('dotenv').config()
+
+const mongoDb = process.env.MONGO_URL
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
@@ -24,7 +26,7 @@ const app = express();
 app.set("views", __dirname);
 app.set("view engine", "ejs");
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
