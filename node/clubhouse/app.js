@@ -6,6 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs")
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const {body, validationResult} = require('express-validator')
 
 const mongoDb = "mongodb+srv://admin:3TC2vdxJvezI8ETb@cluster0.ty3uuu8.mongodb.net/clubhouse?retryWrites=true&w=majority"
 mongoose.connect(mongoDb);
@@ -30,21 +31,21 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 passport.use(
-	new LocalStrategy(async (username, password, done) => {
-		try {
-			const user = await User.findOne({ username: username });
-			if (!user) {
-				return done(null, false, { message: "Incorrect username" });
-			};
-			const match = await bcrypt.compare(password, user.password);
-			if (!match) {
-				return done(null, false, { message: "Incorrect password" })
-			}
-			return done(null, user);
-		} catch(err) {
-			return done(err);
-		};
-	})
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username: username });
+      if (!user) {
+	return done(null, false, { message: "Incorrect username" });
+      };
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+	return done(null, false, { message: "Incorrect password" })
+      }
+      return done(null, user);
+    } catch(err) {
+      return done(err);
+    };
+  })
 );
 
 passport.serializeUser((user, done) => {
@@ -71,20 +72,34 @@ app.get("/", (req, res) => {
 
 app.get("/signup", (req, res) => res.render("signup", {user: {username: ''}, errors: ''}));
 
-app.post("/signup", async (req, res, next) => {
-	bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-		if (err) {
-			return next(err);
-		} else {
-			const user = new User({
-				username: req.body.username,
-				password: hashedPassword
-			});
-			const result = await user.save();
-			res.redirect("/");
-		};
+app.post("/signup", [
+  body('username').custom(async value => {
+    const user = await User.findOne({username: value})
+    if (user) {
+      throw new Error('username taken');
+    }
+  }),
+  body('password').custom((value, { req }) => {
+    return value == req.body.confirmation
+  }).withMessage('passwords must match'),
+
+  async (req, res, next) => {
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+      const errors = validationResult(req).array()
+      console.log(errors)
+      if (err || errors.length) {
+	res.render("signup", {user: {username: req.body.username}, errors});
+      } else {
+	const user = new User({
+	  username: req.body.username,
+	  password: hashedPassword
 	});
-});
+	const result = await user.save();
+	res.redirect("/");
+      };
+    });
+  }
+]);
 
 app.get("/login", (req, res) => res.render("login", {user: {username: ''}, errors: ''}));
 
