@@ -10,6 +10,7 @@
 			<a href='/'>clubhouse</a>
 			<div style='display: flex; gap: 10px; list-style-type: none;'>
 				<% if (session) { %>
+				<a href="/join">join</a>
 				<a href='/logout'>logout</a>
 				<% } else { %>
 				<a href='/signup'>sign up</a>
@@ -30,11 +31,13 @@
 			<% }) %>
 		<% } %>
 		<% if (session) { %>
-			<form method='post' style='display: flex; flex-direction: column;'>
-				<input name="title" placeholder='title' value=<%=message.title %>>
-				<textarea name='text' placeholder='text' rows="3" cols="5"></textarea>
-				<input type="submit" value="post">
-			</form>
+			<% if (session.member) { %>
+				<form method='post' style='display: flex; flex-direction: column;'>
+					<input name="title" placeholder='title' value=<%=message.title %>>
+					<textarea name='text' placeholder='text' rows="3" cols="5"></textarea>
+					<input type="submit" value="post">
+				</form>
+			<% } %>
 		<% } %>
 		<% if (errors) { %>
 			<% errors.forEach(function(e) { %>

@@ -17,7 +17,8 @@ const User = mongoose.model(
   "User",
   new Schema({
     username: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    member: {type: Boolean, required: false}
   })
 );
 
@@ -124,7 +125,8 @@ app.post("/signup", [
       } else {
 	const user = new User({
 	  username: req.body.username,
-	  password: hashedPassword
+	  password: hashedPassword,
+	  member: false,
 	});
 	const result = await user.save();
 	res.redirect("/");
@@ -151,5 +153,16 @@ app.get("/logout", (req, res, next) => {
     res.redirect("/");
   });
 });
+
+app.get('/join', (req, res) => {
+  res.render('join')
+})
+
+app.post('/join', async (req, res) => {
+  if (req.body.password == 'dom') {
+    await User.findByIdAndUpdate(req.user.id, {member: true})
+    res.redirect('/')
+  }
+})
 
 app.listen(3000, () => console.log("app listening on port 3000!"));
