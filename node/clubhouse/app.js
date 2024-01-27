@@ -21,6 +21,16 @@ const User = mongoose.model(
   })
 );
 
+const Message = mongoose.model(
+  'Message',
+  new Schema({
+    title: {type: String, required: true},
+    text: {type: String, required: true},
+    date: {type: Date, required: true},
+    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+  })
+)
+
 const app = express();
 app.set("views", 'views');
 app.set("view engine", "ejs");
@@ -66,9 +76,32 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("index", { session: req.user });
+app.get("/", async (req, res) => {
+  const messages = await Message.find().populate('user').sort({date: 1}).exec()
+  res.render("index", { session: req.user, messages, message: '', errors: ''});
 });
+
+app.post('/', [
+  body('title').trim().notEmpty().escape(),
+  body('text').trim().notEmpty().escape(),
+
+  async (req, res) => {
+    const errors = validationResult(req).array()
+    const message = new Message({
+      title: req.body.title,
+      text: req.body.text,
+      user: req.user,
+      date: new Date()
+    })
+    if (errors.length) {
+      const messages = await Message.find().populate('user').sort({date: 1}).exec()
+      res.render("index", { session: req.user, messages, message: '', errors});
+    } else {
+      await message.save()
+      res.redirect('/')
+    }
+  }
+])
 
 app.get("/signup", (req, res) => res.render("signup", {user: {username: ''}, errors: ''}));
 
@@ -86,7 +119,6 @@ app.post("/signup", [
   async (req, res, next) => {
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       const errors = validationResult(req).array()
-      console.log(errors)
       if (err || errors.length) {
 	res.render("signup", {user: {username: req.body.username}, errors});
       } else {

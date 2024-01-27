@@ -17,6 +17,30 @@
 				<% } %>
 			</div>
 		</nav>
-		messages
+		<main style='width: 300px; margin: auto;'>
+			
+		<% if (messages) { %>
+			<% messages.forEach(function(m) { %>
+				<div>
+					<h1><%=m.title %></h1>
+					<div><%=m.text %></div>
+					<div>by: <%=m.user.username %></div>
+					<div><%=m.date %></div>
+				</div>
+			<% }) %>
+		<% } %>
+		<% if (session) { %>
+			<form method='post' style='display: flex; flex-direction: column;'>
+				<input name="title" placeholder='title' value=<%=message.title %>>
+				<textarea name='text' placeholder='text' rows="3" cols="5"></textarea>
+				<input type="submit" value="post">
+			</form>
+		<% } %>
+		<% if (errors) { %>
+			<% errors.forEach(function(e) { %>
+				<p style='color: red;'> <%= e.msg %></p>
+			<% }) %>
+		<% } %>
+		</main>
 	</body>
 </html>
