@@ -10,7 +10,12 @@
 			<a href='/'>clubhouse</a>
 			<div style='display: flex; gap: 10px; list-style-type: none;'>
 				<% if (session) { %>
-				<a href="/join">join</a>
+					<% if (!session.member) { %>
+						<a href="/join">join</a>
+					<% } %>
+					<% if (!session.admin) { %>
+						<a href="/admin">admin</a>
+					<% } %>
 				<a href='/logout'>logout</a>
 				<% } else { %>
 				<a href='/signup'>sign up</a>
@@ -25,19 +30,26 @@
 				<div>
 					<h1><%=m.title %></h1>
 					<div><%=m.text %></div>
-					<div>by: <%=m.user.username %></div>
-					<div><%=m.date %></div>
+					<% if (session) { %>
+						<% if (session.member || session.admin) { %>
+							<div>by: <%=m.user.username %></div>
+							<div><%=m.date %></div>
+						<% } %>
+						<% if (session.admin) { %>
+							<form action='/delete' method='post'>
+								<button type="submit" name='messageId' value=<%=m.id %>>delete</button>
+							</form>
+						<% } %>
+					<% } %>
 				</div>
 			<% }) %>
 		<% } %>
 		<% if (session) { %>
-			<% if (session.member) { %>
-				<form method='post' style='display: flex; flex-direction: column;'>
-					<input name="title" placeholder='title' value=<%=message.title %>>
-					<textarea name='text' placeholder='text' rows="3" cols="5"></textarea>
-					<input type="submit" value="post">
-				</form>
-			<% } %>
+			<form method='post' style='display: flex; flex-direction: column;'>
+				<input name="title" placeholder='title' value=<%=message.title %>>
+				<textarea name='text' placeholder='text' rows="3" cols="5"></textarea>
+				<input type="submit" value="post">
+			</form>
 		<% } %>
 		<% if (errors) { %>
 			<% errors.forEach(function(e) { %>

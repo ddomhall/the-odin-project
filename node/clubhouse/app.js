@@ -18,7 +18,8 @@ const User = mongoose.model(
   new Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
-    member: {type: Boolean, required: false}
+    member: {type: Boolean, required: true},
+    admin: {type: Boolean, required: true},
   })
 );
 
@@ -127,6 +128,7 @@ app.post("/signup", [
 	  username: req.body.username,
 	  password: hashedPassword,
 	  member: false,
+	  admin: false,
 	});
 	const result = await user.save();
 	res.redirect("/");
@@ -155,7 +157,7 @@ app.get("/logout", (req, res, next) => {
 });
 
 app.get('/join', (req, res) => {
-  res.render('join')
+  res.render('join', {session: req.user})
 })
 
 app.post('/join', async (req, res) => {
@@ -163,6 +165,22 @@ app.post('/join', async (req, res) => {
     await User.findByIdAndUpdate(req.user.id, {member: true})
     res.redirect('/')
   }
+})
+
+app.get('/admin', (req, res) => {
+  res.render('admin', {session: req.user})
+})
+
+app.post('/admin', async (req, res) => {
+  if (req.body.password == 'dom') {
+    await User.findByIdAndUpdate(req.user.id, {admin: true})
+    res.redirect('/')
+  }
+})
+
+app.post('/delete', async (req, res) => {
+  await Message.findByIdAndDelete(req.body.messageId)
+  res.redirect('/')
 })
 
 app.listen(3000, () => console.log("app listening on port 3000!"));
