@@ -9,12 +9,12 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
 const User = mongoose.model(
-  "User",
-  new Schema({
-    username: { type: String, required: true },
-    pw: { type: String, required: true },
-    member: { type: Boolean, required: true },
-  })
+	"User",
+	new Schema({
+		username: { type: String, required: true },
+		pw: { type: String, required: true },
+		member: { type: Boolean, required: true },
+	})
 );
 
 const app = express()
@@ -47,7 +47,7 @@ app.post('/signup', [
 		})
 
 		if (errors.length) {
-			res.render('signup', {session, user, errors})
+		res.render('signup', {session, user, errors})
 		} else {
 			await user.save()
 			res.redirect('/')
@@ -55,6 +55,17 @@ app.post('/signup', [
 	}
 ])
 
-app.get('/login', (req, res, next) => res.render('login', {session, user: {username: ''}}))
+app.get('/login', (req, res, next) => res.render('login', {session, user: {username: ''}, errors: ''}))
+
+app.post('/login', async (req, res, next) => {
+	const user = await User.findOne({username: req.body.username}).exec()
+	if (!user) {
+		res.render('login', {user: {username: req.body.username}, errors: [{msg: 'username not found'}]})
+	} else if (req.body.pw !== user.pw) {
+		res.render('login', {user: {username: req.body.username}, errors: [{msg: 'incorrect password'}]})
+	} else {
+		res.redirect('/')
+	}
+})
 
 app.listen(3000, () => console.log("listening on :3000"));

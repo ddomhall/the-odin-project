@@ -6,11 +6,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black'>
+		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black; margin-bottom: 15px;'>
 			<a href='/'>clubhouse</a>
 			<a href='/signup'>sign up</a>
 			</ul>
 		</nav>
-		log in	
+		<main style='width: 300px; margin: auto; text-align: center;'>
+			<form method='post' style='display: flex; flex-direction: column; gap: 10px;'>
+				<input name="username" placeholder="username" value=<%= user.username %>>
+				<input name="pw" placeholder='password'type="password" >
+				<input type="submit" value="log in">
+			</form>
+			<% if (errors) { %>
+				<% errors.forEach(function(e) { %>
+					<p style='color: red;'> <%= e.msg %></p>
+				<% }) %>
+			<% } %>
+		</main>
 	</body>
 </html>
