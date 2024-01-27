@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black'>
+		<nav style='display: flex; justify-content: space-between; border-bottom: 1px solid black; margin-bottom: 15px;'>
 			<h3><a href='/'>clubhouse</a></h3>
 			<ul style='display: flex; gap: 10px; list-style-type: none;'>
 				<% if (session) { %>
@@ -17,8 +17,8 @@
 				<% } %>
 			</ul>
 		</nav>
-		<main>
-			<form method='post' style='display: flex; flex-direction: column; gap: 10px; width: 300px; margin: auto; padding: 20px;'>
+		<main style='width: 300px; margin: auto; text-align: center;'>
+			<form method='post' style='display: flex; flex-direction: column; gap: 10px;'>
 				<input name="fname" placeholder="first name" value=<%= user.fname %>>
 				<input name="lname" placeholder="last name" value=<%= user.lname %>>
 				<input name="email" placeholder='email' type="email" value=<%= user.email %>>
@@ -26,6 +26,11 @@
 				<input name="cpw" placeholder='confirm password'type="password" >
 				<input type="submit" value="submit">
 			</form>
+			<% if (errors) { %>
+				<% errors.forEach(function(e) { %>
+					<p style='color: red;'> <%= e.msg %></p>
+				<% }) %>
+			<% } %>
 		</main>
 	</body>
 </html>
