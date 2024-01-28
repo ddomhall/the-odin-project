@@ -4,7 +4,7 @@ const User = require('../models/userModel.js')
 const Post = require('../models/postModel.js')
 
 router.get('/', async (req, res) => {
-	res.json(await Post.find().exec)
+	res.json(await Post.find().populate('author').exec())
 })
 
 router.post('/', async(req, res) => {
