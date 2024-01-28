@@ -4,7 +4,7 @@ const User = require('../models/userModel.js')
 const bcrypt = require('bcryptjs')
 
 router.get('/', async (req, res) => {
-	res.json(await User.find().exec())
+	res.json(await User.find({username: req.query.search}).exec())
 })
 
 router.post('/', async (req, res) => {
