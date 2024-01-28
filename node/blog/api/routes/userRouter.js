@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/userModel.js')
+const Post = require('../models/postModel.js')
 const bcrypt = require('bcryptjs')
 
 router.get('/', async (req, res) => {
@@ -25,14 +26,19 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-	console.log(req.params.id)
 	const user = await User.findOne({_id: req.params.id}).exec()
-	console.log('user', user)
 	if (user) {
 		res.json(user)
 	} else {
 		res.status(404).send('not found')
 	}
+})
+
+router.get('/:id/posts', async (req, res) => {
+	console.log(req.params.id)
+	const posts = await Post.find({author: req.params.id}).exec()
+	console.log(posts)
+	res.json(posts)
 })
 
 module.exports = router
