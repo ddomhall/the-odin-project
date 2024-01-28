@@ -4,6 +4,7 @@ import ErrorPage from "./ErrorPage";
 import Feed from './Feed.jsx'
 import Search from './Search.jsx'
 import Profile from './Profile.jsx'
+import Post from './Post.jsx'
 
 
 export default function Router() {
@@ -15,13 +16,19 @@ export default function Router() {
       children: [
         {
           index: true,
-          element: <Feed />},
+          element: <Feed />
+        },
         {
           path: 'search',
-          element: <Search />},
+          element: <Search />
+        },
         {
           path: 'users/:id',
-          element: <Profile />,
+          element: <Profile />
+        },
+        {
+          path: 'posts/:id',
+          element: <Post />
         }
       ]
     },

@@ -7,13 +7,17 @@ router.get('/', async (req, res) => {
 	res.json(await Post.find().populate('author').exec())
 })
 
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
 	const post = new Post({
 		content: req.body.content,
 		author: await User.findOne().exec(),
 		date: new Date(),
 	}).save()
 	res.json({msg: "post created"})
+})
+
+router.get('/:id', async (req, res) => {
+	res.json(await Post.findOne({_id: req.params.id}).populate('author').exec())
 })
 
 module.exports = router

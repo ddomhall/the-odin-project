@@ -14,18 +14,22 @@ export default function Profile() {
 
   return(
     <>
-      <div className='flex justify-between'>
+      <div className='flex justify-between mb-6'>
         <h1>{user.username}</h1>
         <button>follow</button>
       </div>
+      <div className='flex gap-6 flex-col'>
       {posts.map(p => {
         return (
-          <section key={p._id}>
-            <p>{p.content}</p>
-            <p>{p.date}</p>
-          </section>
+          <a href={'/posts/' + p._id} key={p._id} className='w-full'>
+            <section >
+              <p>{p.content}</p>
+              <p>{p.date}</p>
+            </section>
+          </a>
         )
       })}
+      </div>
     </>
   )
 }
