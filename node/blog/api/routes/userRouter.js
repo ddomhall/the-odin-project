@@ -26,8 +26,8 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	console.log(req.params.id)
-	const user = await User.findOne({username: req.params.id}).exec()
-	console.log(user)
+	const user = await User.findOne({_id: req.params.id}).exec()
+	console.log('user', user)
 	if (user) {
 		res.json(user)
 	} else {
