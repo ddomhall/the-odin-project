@@ -8,16 +8,20 @@ export default function Feed() {
   }, [])
 
   return (
-    <>
+    <div className='flex flex-col gap-6'>
       {posts.map(p => {
         return(
           <section key={p._id}>
-            <p>{p.content}</p>
-            <p>{p.author.username}</p>
+            <a href={'/posts/' + p._id}>
+              <p>{p.content}</p>
+            </a>
+            <a href={'/users/' + p.author._id}>
+              <p>{p.author.username}</p>
+            </a>
             <p>{p.date}</p>
           </section>
         )
       })}
-    </>
+    </div>
   )
 }

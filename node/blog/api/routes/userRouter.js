@@ -35,9 +35,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.get('/:id/posts', async (req, res) => {
-	console.log(req.params.id)
 	const posts = await Post.find({author: req.params.id}).exec()
-	console.log(posts)
 	res.json(posts)
 })
 

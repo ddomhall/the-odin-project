@@ -3,7 +3,7 @@ import {Outlet} from 'react-router-dom'
 function App() {
   return (
     <>
-      <nav className='flex w-full justify-between'>
+      <nav className='flex w-full justify-between mb-6'>
         <a href='/'>logo</a>
         <form action='/search'>
           <input name='search' />
