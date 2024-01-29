@@ -11,7 +11,7 @@ export default function Search() {
 
   return (
     <>
-      {users.map(u => <a href={'/users/' + u._id}><section>{u.username}</section></a>)}
+      {users == [] ? 'no users found' : users.map(u => <a href={'/users/' + u._id}><section>{u.username}</section></a>)}
     </>
   )
 }

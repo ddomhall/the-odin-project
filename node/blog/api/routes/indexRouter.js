@@ -5,10 +5,21 @@ const bcrypt = require('bcryptjs')
 
 router.post('/login', async (req, res) => {
 	const user = await User.findOne({username: req.body.username}).exec()
-	bcrypt.compare(req.body.password, user.password, function(err, result) {
-		if (err) res.status(500)
-		res.json({result})
-	})
+
+	if (!user) {
+		res.status(404).json({msg: "user not found"})
+	} else {
+		bcrypt.compare(req.body.password, user.password, function(err, result) {
+			console.log(result)
+			if (err) {
+				res.status(500).json({msg: "something went wrong"})
+			} else if (!result) {
+				res.status(404).json({msg: "incorrect password"})
+			} else {
+				res.json(user)
+			}
+		})
+	}
 })
 
 module.exports = router
