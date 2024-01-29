@@ -20,7 +20,17 @@ function App() {
             <input name='search' />
             <input type='submit' value='search' />
           </form>
-          {session ? <div><a href={'/users/' + session }>profile</a><button onClick={logout}>log out</button></div> : <div><a href='/signup'>sign up</a><a href='/login'>log in</a></div>}
+          {session ? 
+            <div>
+              <a href='/create'>create</a>
+              <a href={'/users/' + session }>profile</a>
+              <button onClick={logout}>log out</button>
+            </div> :
+            <div>
+              <a href='/signup'>sign up</a>
+              <a href='/login'>log in</a>
+            </div>
+          }
         </nav>
         <main className='w-96 m-auto'>
           <Outlet />

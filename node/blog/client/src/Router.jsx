@@ -7,8 +7,7 @@ import Profile from './Profile.jsx'
 import Post from './Post.jsx'
 import Login from './Login.jsx'
 import Signup from './Signup.jsx'
-
-
+import Create from './Create.jsx'
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -41,6 +40,10 @@ export default function Router() {
           path: 'signup',
           element: <Signup />
         },
+        {
+          path: 'create',
+          element: <Create />
+        }
       ]
     },
   ]);

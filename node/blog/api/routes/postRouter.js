@@ -8,12 +8,16 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-	const post = new Post({
-		content: req.body.content,
-		author: await User.findOne().exec(),
-		date: new Date(),
-	}).save()
-	res.json({msg: "post created"})
+	if (req.body.content) {
+		const post = new Post({
+			content: req.body.content,
+			author: req.body.author,
+			date: new Date(),
+		}).save()
+		res.json({msg: "post created"})
+	} else {
+		res.status(404).json({msg: 'no content'})
+	}
 })
 
 router.get('/:id', async (req, res) => {
