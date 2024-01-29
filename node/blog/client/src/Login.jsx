@@ -1,6 +1,13 @@
 import {useEffect, useContext} from 'react'
+import {SessionContext} from './SessionContext.jsx'
+import Cookies from 'js-cookie'
+import { redirect } from "react-router-dom";
 
 export default function Login() {
+  const {session, setSession} = useContext(SessionContext)
+  console.log(session)
+  
+
   async function loginApi(e) {
     e.preventDefault()
     fetch('http://localhost:3000/login', {
@@ -13,7 +20,16 @@ export default function Login() {
         username: e.target.elements.username.value,
         password: e.target.elements.password.value,
       })
-    }).then(res => res.json()).then(res => console.log(res))
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (typeof(res) == 'string') {
+          Cookies.set('session', res)
+          window.location.replace('/')
+        } else {
+          return null
+        }
+      })
   }
 
   return(
