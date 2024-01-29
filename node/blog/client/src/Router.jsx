@@ -5,6 +5,9 @@ import Feed from './Feed.jsx'
 import Search from './Search.jsx'
 import Profile from './Profile.jsx'
 import Post from './Post.jsx'
+import Login from './Login.jsx'
+import Signup from './Signup.jsx'
+
 
 
 export default function Router() {
@@ -29,7 +32,15 @@ export default function Router() {
         {
           path: 'posts/:id',
           element: <Post />
-        }
+        },
+        {
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'signup',
+          element: <Signup />
+        },
       ]
     },
   ]);
