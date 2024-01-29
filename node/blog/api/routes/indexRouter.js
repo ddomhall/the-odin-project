@@ -10,7 +10,6 @@ router.post('/login', async (req, res) => {
 		res.status(404).json({msg: "user not found"})
 	} else {
 		bcrypt.compare(req.body.password, user.password, function(err, result) {
-			console.log(result)
 			if (err) {
 				res.status(500).json({msg: "something went wrong"})
 			} else if (!result) {

@@ -1,10 +1,12 @@
 import {useParams} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
+import {SessionContext} from './SessionContext.jsx'
 
 export default function Profile() {
   const [user, setUser] = useState({})
   const [posts, setPosts] = useState([])
   const {id}= useParams()
+  const {session} = useContext(SessionContext)
 
 
   useEffect(() => {
@@ -16,7 +18,7 @@ export default function Profile() {
     <>
       <div className='flex justify-between mb-6'>
         <h1>{user.username}</h1>
-        <button>follow</button>
+        {session == id ? "" : <button>follow</button>}
       </div>
       <div className='flex gap-6 flex-col'>
       {posts.map(p => {

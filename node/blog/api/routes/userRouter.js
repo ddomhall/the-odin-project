@@ -11,16 +11,16 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	const existing = await User.findOne({username: req.body.username}).exec()
 	if (existing) {
-		res.status(403).send('username taken\n')
+		res.status(403).json({msg: "username taken\n"})
 	} else {
 		bcrypt.hash(req.body.password, 8, async function(err, hash) {
-			if (err) res.status(500).send('something happened\n')
+			if (err) res.status(500).json({msg: "something happened\n"})
 			const user = await new User({
 				username: req.body.username,
 				password: hash,
 				following: [],
 			}).save()
-			res.json({msg: 'user created'})
+			res.json(user._id)
 		})
 	}
 })
