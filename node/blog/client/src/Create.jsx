@@ -12,7 +12,6 @@ export default function create() {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      method: 'POST',
       body: JSON.stringify({
         content: e.target.elements.content.value,
         author: session,

@@ -3,7 +3,7 @@ import App from "./App";
 import ErrorPage from "./ErrorPage";
 import Feed from './Feed.jsx'
 import Search from './Search.jsx'
-import Profile from './Profile.jsx'
+import User from './User.jsx'
 import Post from './Post.jsx'
 import Login from './Login.jsx'
 import Signup from './Signup.jsx'
@@ -26,7 +26,7 @@ export default function Router() {
         },
         {
           path: 'users/:id',
-          element: <Profile />
+          element: <User />
         },
         {
           path: 'posts/:id',
