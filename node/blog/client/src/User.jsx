@@ -18,7 +18,7 @@ export default function Profile() {
     <>
       <div className='flex justify-between mb-6'>
         <h1>{user.username}</h1>
-        {session == id ? "" : <button>follow</button>}
+        {session == id ? <button>edit</button> : <button>follow</button>}
       </div>
       <div className='flex gap-6 flex-col'>
       {posts.map(p => {

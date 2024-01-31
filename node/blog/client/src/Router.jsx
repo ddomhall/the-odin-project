@@ -8,6 +8,7 @@ import Post from './Post.jsx'
 import Login from './Login.jsx'
 import Signup from './Signup.jsx'
 import Create from './Create.jsx'
+import Comment from './Comment.jsx'
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -43,7 +44,11 @@ export default function Router() {
         {
           path: 'create',
           element: <Create />
-        }
+        },
+        {
+          path: 'comments/:id',
+          element: <Comment />
+        },
       ]
     },
   ]);

@@ -8,7 +8,6 @@ export default function Profile() {
   const [comments, setComments] = useState([])
   const {id}= useParams()
 
-
   useEffect(() => {
     fetch(`http://localhost:3000/posts/${id}`).then(res => res.json()).then(res => setPost(res))
     fetch(`http://localhost:3000/posts/${id}/comments/`).then(res => res.json()).then(res => setComments(res))
@@ -45,11 +44,9 @@ export default function Profile() {
       <section className='flex flex-col gap-6'>
         {comments.map(c => {
           return (
-            <div key={c._id}>
-              <p>{c.content}</p>
-              <a href={'/users/' + c.author._id}>
-                <p>{c.author.username}</p>
-              </a>
+            <div key={c._id} className='flex flex-col'>
+              <a href={'/comments/' + c._id}>{c.content}</a>
+              <a href={'/users/' + c.author._id}>{c.author.username}</a>
               <p>{c.date}</p>
             </div>
           )
