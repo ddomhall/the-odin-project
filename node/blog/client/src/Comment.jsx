@@ -26,6 +26,10 @@ export default function Comment() {
     }).then(window.location.reload())
   }
 
+  async function deleteComment() {
+    fetch(`http://localhost:3000/comments/${id}/delete`, {method: 'DELETE'}).then(location.href= document.referrer)
+  }
+
   return (
     <>
       <section>
@@ -46,7 +50,7 @@ export default function Comment() {
             <button onClick={() => setEdit(false)}>cancel</button> :
             <button onClick={() => setEdit(true)}>edit</button>
             }
-            <button>delete</button>
+            <button onClick={deleteComment}>delete</button>
           </div> : ''
         }
       </section>
