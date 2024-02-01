@@ -18,9 +18,10 @@ export default function create() {
       })
     }).then(res => res.json()).then(res => {
         if (res.status == 200) {
-          console.log(0, res)
+          console.log(res)
+          window.location.replace('/')
         } else {
-          console.log(1, res)
+          console.log(res)
         }
       })
   }

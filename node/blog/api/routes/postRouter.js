@@ -15,9 +15,9 @@ router.post('/', async (req, res) => {
 			author: req.body.author,
 			date: new Date(),
 		}).save()
-		res.json({msg: "post created"})
+		res.json({msg: "post created", status: 200})
 	} else {
-		res.status(404).json({msg: 'no content'})
+		res.json({msg: 'no content', status: 404})
 	}
 })
 
@@ -47,5 +47,9 @@ router.put('/:id/update', async (req, res) => {
 	Post.findByIdAndUpdate(req.params.id, {content: req.body.content}).exec()
 })
 
+router.delete('/:id/delete', async (req, res) => {
+	await Comment.deleteMany({post: req.params.id}).exec()
+	await Post.findByIdAndDelete(req.params.id).exec()
+})
 module.exports = router
 

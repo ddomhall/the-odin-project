@@ -44,7 +44,7 @@ export default function Profile() {
   }
 
   async function deletePost() {
-    console.log(0)
+    fetch(`http://localhost:3000/posts/${id}/delete`, {method: 'DELETE'}).then(document.location.replace('/'))
   }
 
   return(
