@@ -51,4 +51,8 @@ router.delete('/:id/delete', async (req, res) => {
 	await User.findByIdAndDelete(req.params.id).exec()
 })
 
+router.post('/:id/follow', async (req, res) => {
+	await User.updateOne({_id: req.body.user}, {$push: {following: req.params.id}})
+})
+
 module.exports = router
