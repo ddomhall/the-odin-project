@@ -39,4 +39,8 @@ router.get('/:id/posts', async (req, res) => {
 	res.json(posts)
 })
 
+router.put('/:id/update', async (req, res) => {
+	await User.findByIdAndUpdate(req.params.id, {username: req.body.username})
+})
+
 module.exports = router
