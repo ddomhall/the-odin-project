@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/userModel.js')
 const Post = require('../models/postModel.js')
+const Comment = require('../models/commentModel.js')
 const bcrypt = require('bcryptjs')
 
 router.get('/', async (req, res) => {
@@ -40,7 +41,14 @@ router.get('/:id/posts', async (req, res) => {
 })
 
 router.put('/:id/update', async (req, res) => {
-	await User.findByIdAndUpdate(req.params.id, {username: req.body.username})
+	await User.findByIdAndUpdate(req.params.id, {username: req.body.username}).exec()
+})
+
+router.delete('/:id/delete', async (req, res) => {
+	console.log(req.params.id)
+	await Comment.deleteMany({author: req.params.id}).exec()
+	await Post.deleteMany({author: req.params.id}).exec()
+	await User.findByIdAndDelete(req.params.id).exec()
 })
 
 module.exports = router

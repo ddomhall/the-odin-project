@@ -5,8 +5,6 @@ import { redirect } from "react-router-dom";
 
 export default function Login() {
   const {session, setSession} = useContext(SessionContext)
-  console.log(session)
-  
 
   async function loginApi(e) {
     e.preventDefault()

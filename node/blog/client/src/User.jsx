@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom'
 import {useState, useEffect, useContext} from 'react'
 import {SessionContext} from './SessionContext.jsx'
+import Cookies from 'js-cookie'
 
 export default function Profile() {
   const [edit, setEdit] = useState(false)
@@ -30,7 +31,7 @@ export default function Profile() {
   }
 
   async function deleteUser() {
-    fetch(`http://localhost:3000/posts/${id}/delete`, {method: 'DELETE'}).then(document.location.replace('/'))
+    fetch(`http://localhost:3000/users/${id}/delete`, {method: 'DELETE'}).then(Cookies.remove('session')).then(document.location.replace('/'))
   }
 
   return(
