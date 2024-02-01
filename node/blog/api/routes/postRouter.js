@@ -43,5 +43,9 @@ router.post('/:id/comments', async (req, res) => {
 	}
 })
 
+router.put('/:id/update', async (req, res) => {
+	Post.findByIdAndUpdate(req.params.id, {content: req.body.content}).exec()
+})
+
 module.exports = router
 

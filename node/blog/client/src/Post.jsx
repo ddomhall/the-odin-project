@@ -6,6 +6,7 @@ export default function Profile() {
   const {session} = useContext(SessionContext)
   const [post, setPost] = useState({_id: '', content: '', author: {username: ''}, date: ''})
   const [comments, setComments] = useState([])
+  const [edit, setEdit] = useState(false)
   const {id}= useParams()
 
   useEffect(() => {
@@ -28,15 +29,48 @@ export default function Profile() {
     }).then(window.location.reload())
   }
 
+  async function editPost(e) {
+    e.preventDefault()
+    fetch(`http://localhost:3000/posts/${id}/update`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        content: e.target.elements.content.value,
+      })
+    }).then(window.location.reload())
+  }
+
+  async function deletePost() {
+    console.log(0)
+  }
+
   return(
     <>
-      <section key={post._id}>
-        <p>{post.content}</p>
-        <a href={'/users/' + post.author._id}>
-          <p>{post.author.username}</p>
-        </a>
-        <p>{post.date}</p>
-      </section>
+      {!edit ?
+        <section>
+          <p>{post.content}</p>
+          <a href={'/users/' + post.author._id}>
+            <p>{post.author.username}</p>
+          </a>
+          <p>{post.date}</p>
+        </section> :
+        <form onSubmit={editPost} className='flex flex-col'>
+          <input name='content' placeholder='content' />
+          <input type='submit' value='edit' />
+        </form>
+      }
+      {session == post.author._id ?
+        <div className='flex justify-between'>
+          {edit ?
+            <button onClick={() => setEdit(false)}>cancel</button> :
+            <button onClick={() => setEdit(true)}>edit</button>
+          }
+          <button onClick={deletePost}>delete</button>
+        </div> : ''
+      }
       <form onSubmit={commentApi} className='flex flex-col'>
         <input name='content' placeholder='content' />
         <input type='submit' value='comment' />
