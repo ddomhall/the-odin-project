@@ -13,7 +13,9 @@ export default function Profile() {
 
 
   useEffect(() => {
+    if (session) {
     fetch(`http://localhost:3000/users/${session}`).then(res => res.json()).then(res => setViewer(res))
+    }
     fetch(`http://localhost:3000/users/${id}`).then(res => res.json()).then(res => setUser(res))
     fetch(`http://localhost:3000/users/${id}/posts`).then(res => res.json()).then(res => setPosts(res))
   },[])
@@ -74,6 +76,8 @@ export default function Profile() {
           <form onSubmit={editUser}><input name='username' placeholder='username' /><input type='submit' value='edit'/></form> :
           <h1>{user.username}</h1>
         }
+        {session ? 
+        <div>
         {session == id ?
           <div>
             {edit ?
@@ -88,6 +92,8 @@ export default function Profile() {
               <button onClick={followUser}>follow</button>
             }
           </div>
+        }
+        </div> : ''
         }
       </div>
       <div className='flex gap-6 flex-col mt-6'>

@@ -58,7 +58,7 @@ export default function Profile() {
           <p>{post.date}</p>
         </section> :
         <form onSubmit={editPost} className='flex flex-col'>
-          <input name='content' placeholder='content' />
+          <input name='content' placeholder='content' defaultValue={post.content}/>
           <input type='submit' value='edit' />
         </form>
       }
@@ -71,10 +71,12 @@ export default function Profile() {
           <button onClick={deletePost}>delete</button>
         </div> : ''
       }
+      {session ? 
       <form onSubmit={commentApi} className='flex flex-col'>
         <input name='content' placeholder='content' />
         <input type='submit' value='comment' />
-      </form>
+      </form> : ''
+      }
       <section className='flex flex-col gap-6'>
         {comments.map(c => {
           return (

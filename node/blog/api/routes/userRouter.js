@@ -45,7 +45,6 @@ router.put('/:id/update', async (req, res) => {
 })
 
 router.delete('/:id/delete', async (req, res) => {
-	console.log(req.params.id)
 	await Comment.deleteMany({author: req.params.id}).exec()
 	await Post.deleteMany({author: req.params.id}).exec()
 	await User.findByIdAndDelete(req.params.id).exec()

@@ -18,10 +18,8 @@ export default function create() {
       })
     }).then(res => res.json()).then(res => {
         if (res.status == 200) {
-          console.log(res)
           window.location.replace('/')
         } else {
-          console.log(res)
         }
       })
   }
