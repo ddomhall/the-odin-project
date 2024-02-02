@@ -14,6 +14,7 @@ export default function create() {
       },
       body: JSON.stringify({
         content: e.target.elements.content.value,
+        published: e.target.elements.published.value == 'on' ? true : false,
         author: session,
       })
     }).then(res => res.json()).then(res => {
@@ -28,6 +29,9 @@ export default function create() {
   return (
     <form onSubmit={postApi} className='flex flex-col'>
       <input name='content' placeholder='content' />
+      <label htmlFor='published'>published
+        <input name='published' id='published' type='checkbox'/>
+      </label>
       <input type='submit' value='post' />
     </form>
   )

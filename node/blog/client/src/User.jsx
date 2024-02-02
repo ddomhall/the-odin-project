@@ -68,27 +68,30 @@ export default function Profile() {
     <>
       <div className='flex justify-between'>
         {edit ?
-          <form onSubmit={editUser}><input name='username' placeholder='username' /><input type='submit' value='edit'/></form> :
+          <form onSubmit={editUser}>
+            <input name='username' placeholder='username' />
+            <input type='submit' value='edit'/>
+          </form> :
           <h1>{user.username}</h1>
         }
         {session ? 
-        <div>
-        {session == id ?
           <div>
-            {edit ?
-              <button onClick={() => setEdit(false)}>cancel</button> : 
-              <button onClick={() => setEdit(true)}>edit</button>
+            {session == id ?
+              <div>
+                {edit ?
+                  <button onClick={() => setEdit(false)}>cancel</button> : 
+                  <button onClick={() => setEdit(true)}>edit</button>
+                }
+                <button onClick={deleteUser}>delete</button>
+              </div> :
+              <div>
+                {viewer.following.includes(id) ?
+                  <button onClick={unfollowUser}>unfollow</button> :
+                  <button onClick={followUser}>follow</button>
+                }
+              </div>
             }
-            <button onClick={deleteUser}>delete</button>
-          </div> :
-          <div>
-            {viewer.following.includes(id) ?
-              <button onClick={unfollowUser}>unfollow</button> :
-              <button onClick={followUser}>follow</button>
-            }
-          </div>
-        }
-        </div> : ''
+          </div> : ''
         }
       </div>
       <div className='flex gap-6 flex-col mt-6'>

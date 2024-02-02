@@ -39,6 +39,7 @@ export default function Profile() {
       },
       body: JSON.stringify({
         content: e.target.elements.content.value,
+        published: e.target.elements.published.value == 'on' ? true : false,
       })
     }).then(window.location.reload())
   }
@@ -59,6 +60,12 @@ export default function Profile() {
         </section> :
         <form onSubmit={editPost} className='flex flex-col'>
           <input name='content' placeholder='content' defaultValue={post.content}/>
+          <label htmlFor='published'>published
+            {post.published ?
+            <input name='published' id='published' type='checkbox' defaultChecked/> :
+            <input name='published' id='published' type='checkbox' />
+            }
+          </label>
           <input type='submit' value='edit' />
         </form>
       }

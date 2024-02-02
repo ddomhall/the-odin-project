@@ -7,9 +7,9 @@ const Comment = require('../models/commentModel.js')
 router.get('/', async (req, res) => {
 	if (req.query.id) {
 		let user = await User.findOne({_id: req.query.id}).exec()
-		res.json(await Post.find({author: {$in: user.following}}).populate('author').exec())
+		res.json(await Post.find({author: {$in: user.following}, published: true}).populate('author').exec())
 	} else {
-		res.json(await Post.find().populate('author').exec())
+		res.json(await Post.find({published: true}).populate('author').exec())
 	}
 })
 
@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
 		const post = new Post({
 			content: req.body.content,
 			author: req.body.author,
+			published: req.body.published,
 			date: new Date(),
 		}).save()
 		res.json({msg: "post created", status: 200})

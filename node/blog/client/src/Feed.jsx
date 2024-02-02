@@ -6,7 +6,7 @@ export default function Feed() {
   const {session} = useContext(SessionContext)
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts?id=${session}`).then(res => res.json()).then(res => setPosts(res))
+    if (session) fetch(`http://localhost:3000/posts?id=${session}`).then(res => res.json()).then(res => setPosts(res))
   }, [])
 
   return (
