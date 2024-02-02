@@ -64,11 +64,6 @@ export default function Profile() {
     }).then(window.location.reload())
   }
 
-  function test() {
-    console.log(viewer.following)
-    console.log(id)
-  }
-
   return(
     <>
       <div className='flex justify-between'>

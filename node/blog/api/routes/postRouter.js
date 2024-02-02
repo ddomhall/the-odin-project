@@ -5,7 +5,12 @@ const Post = require('../models/postModel.js')
 const Comment = require('../models/commentModel.js')
 
 router.get('/', async (req, res) => {
-	res.json(await Post.find().populate('author').exec())
+	if (req.query.id) {
+		let user = await User.findOne({_id: req.query.id}).exec()
+		res.json(await Post.find({author: {$in: user.following}}).populate('author').exec())
+	} else {
+		res.json(await Post.find().populate('author').exec())
+	}
 })
 
 router.post('/', async (req, res) => {
