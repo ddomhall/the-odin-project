@@ -50,7 +50,16 @@ export default function Profile() {
   }
 
   async function unfollowUser() {
-    console.log(0)
+    fetch(`http://localhost:3000/users/${id}/unfollow`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: viewer._id
+      })
+    }).then(window.location.reload())
   }
 
   function test() {
@@ -60,7 +69,6 @@ export default function Profile() {
 
   return(
     <>
-      <button onClick={test}>test</button>
       <div className='flex justify-between'>
         {edit ?
           <form onSubmit={editUser}><input name='username' placeholder='username' /><input type='submit' value='edit'/></form> :

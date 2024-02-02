@@ -10,7 +10,6 @@ export default function Signup() {
       setErrors([...errors, 'passwords must match'])
     } else {
       fetch('http://localhost:3000/users', {
-        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

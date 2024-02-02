@@ -55,4 +55,8 @@ router.post('/:id/follow', async (req, res) => {
 	await User.updateOne({_id: req.body.user}, {$push: {following: req.params.id}})
 })
 
+router.post('/:id/unfollow', async (req, res) => {
+	await User.updateOne({_id: req.body.user}, {$pull: {following: req.params.id}})
+})
+
 module.exports = router
