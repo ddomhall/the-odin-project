@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react'
+import {useState, useRef, useEffect} from 'react'
 
 export default function Play() {
   const [characters, setCharacters] = useState([
@@ -48,10 +48,14 @@ export default function Play() {
       found: false
     },
   ])
-  const [guess, setGuess] = useState({})
+  const [guess, setGuess] = useState({x: 0, y: 0})
   const guessRef = useRef(null)
 
-  function logXY(e) {
+  useEffect(() => {
+    fetch('http://localhost:3000/').then(res => res.json()).then(res => console.log(res))
+  }, [])
+
+  function placeGuess(e) {
     // setGuess({x: Math.round((e.pageX/e.target.width)*100), y: Math.round(((e.pageY-80)/e.target.height)*100)})
     guessRef.current.style.display = 'block'
     setGuess({x: e.pageX, y: e.pageY-80})
@@ -59,6 +63,11 @@ export default function Play() {
 
   function cancelGuess() {
     guessRef.current.style.display = 'none'
+  }
+
+  function submitGuess(e) {
+    console.log(e.target.textContent)
+    cancelGuess()
   }
 
   return (
@@ -74,14 +83,21 @@ export default function Play() {
         </div>
       </section>
       <section className='relative'>
-        <img src='opwaldo.png' onClick={logXY}/>
+        <img src='opwaldo.png' onClick={placeGuess}/>
         {!!guess ?
           <div className='hidden' ref={guessRef}>
             <div className='absolute h-12 w-12 border-4 border-black pointer-events-none' style={{left: guess.x-24, top: guess.y-24}}></div>
             <div className='fixed top-0 bg-black w-full'>
               <p className='text-center h-10 leading-10'>who did you find?</p>
               <div className='flex'>
-                {characters.filter(c => !c.found).map(c => <button className='flex w-full leading-10'><img src={c.name + '.png'} className='h-10 w-10'/>{c.name}</button>)}
+                {characters.filter(c => !c.found).map(c => {
+                  return (
+                    <div key={c.id} onClick={submitGuess} className='flex w-full leading-10'>
+                      <img src={c.name + '.png'} className='h-10 w-10  pointer-events-none'/>
+                      <p className='pointer-events-none w-full'>{c.name}</p>
+                    </div>
+                  )
+                })}
                 <button className='h-10 w-full' onClick={cancelGuess}>cancel</button>
               </div>
             </div>
