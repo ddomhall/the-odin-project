@@ -48,9 +48,12 @@ export default function Play() {
       found: false
     },
   ])
+  const [guess, setGuess] = useState({})
+  const x = 120
 
   function logXY(e) {
-    console.log(Math.round((e.pageX/e.target.width)*100), Math.round(((e.pageY-80)/e.target.height)*100))
+    // setGuess({x: Math.round((e.pageX/e.target.width)*100), y: Math.round(((e.pageY-80)/e.target.height)*100)})
+    setGuess({x: e.pageX, y: e.pageY-80})
   }
 
   return (
@@ -65,7 +68,10 @@ export default function Play() {
           {characters.filter(c => c.found).map(c => <img src={c.name + '.png'} key={c.id} className='h-10 w-10'/>)}
         </div>
       </section>
+      <section className='relative'>
       <img src='opwaldo.png' onClick={logXY}/>
+      {!!guess ? <div className='absolute h-12 w-12 border-4 border-black' style={{left: guess.x-24, top: guess.y-24}}></div> : ''}
+      </section>
     </>
   )
 }
