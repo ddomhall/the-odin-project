@@ -1,36 +1,32 @@
-var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 var cors = require('cors')
+var mongoose = require('mongoose')
 
-var indexRouter = require('./routes/index');
+const mongoDb = "mongodb+srv://admin:Kil1oP5DcE7scJOT@cluster0.ty3uuu8.mongodb.net/photo?retryWrites=true&w=majority"
+mongoose.connect(mongoDb);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
+
+const characterSchema = new mongoose.Schema({
+  name: String,
+  x: Number,
+  y: Number
+})
+
+const Character = mongoose.model('Character', characterSchema)
 
 var app = express();
 
 app.use(cors())
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
-app.use('/', indexRouter);
+app.get('/guess', function(req, res, next) {
+  const name = req.query.name
+  const x = req.query.x
+  const y = req.query.y
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+  res.json({name, x, y})
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+app.listen(3000, () => console.log('listening on :3000'))

@@ -53,15 +53,13 @@ export default function Play() {
   const headerRef = useRef(null)
   const imageRef = useRef(null)
 
-  useEffect(() => {
-    // fetch('http://localhost:3000/').then(res => res.json()).then(res => console.log(res))
-  }, [])
-
   function placeGuess(e) {
     // setGuess({x: Math.round((e.pageX/e.target.width)*100), y: Math.round(((e.pageY-80)/e.target.height)*100)})
     guessRef.current.style.display = 'block'
+
     let x
     let y
+
     if (e.pageX < 24) {
       x = 24
     } else if (e.pageX > imageRef.current.clientWidth - 24) {
@@ -79,7 +77,6 @@ export default function Play() {
     }
 
     setGuess({x, y: y-40-headerRef.current.clientHeight})
-    console.log(guess)
   }
 
   function cancelGuess() {
@@ -90,7 +87,7 @@ export default function Play() {
     // console.log(e.target.textContent)
     const x = Math.round(guess.x / (imageRef.current.clientWidth)*100)
     const y = Math.round(guess.y / (imageRef.current.clientHeight)*100)
-    console.log(x, y)
+    fetch(`http://localhost:3000/guess?name=${e.target.textContent}&x=${x}&y=${y}`).then(res => res.json()).then(res => console.log(res))
     cancelGuess()
   }
 
