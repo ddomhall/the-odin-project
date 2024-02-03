@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 * {
-	box-shadow: 0px 0px 0px 1px white;
-	color-scheme: dark;
+  box-shadow: 0px 0px 0px 1px white;
+  color-scheme: dark;
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
