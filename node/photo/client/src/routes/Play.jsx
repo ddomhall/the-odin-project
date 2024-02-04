@@ -60,18 +60,18 @@ export default function Play() {
     let x
     let y
 
-    if (e.pageX < 24) {
-      x = 24
-    } else if (e.pageX > imageRef.current.clientWidth - 24) {
-      x = imageRef.current.clientWidth - 24
+    if (e.pageX < 20) {
+      x = 20
+    } else if (e.pageX > imageRef.current.clientWidth - 20) {
+      x = imageRef.current.clientWidth - 20
     } else {
       x = e.pageX
     }
 
-    if (e.pageY < 24 + 40 + headerRef.current.clientHeight) {
-      y = 24 + 40 + headerRef.current.clientHeight
-    } else if (e.pageY > 40 + headerRef.current.clientHeight + imageRef.current.clientHeight - 24) {
-      y = 40 + headerRef.current.clientHeight + imageRef.current.clientHeight - 24
+    if (e.pageY < 20 + 40 + headerRef.current.clientHeight) {
+      y = 20 + 40 + headerRef.current.clientHeight
+    } else if (e.pageY > 40 + headerRef.current.clientHeight + imageRef.current.clientHeight - 20) {
+      y = 40 + headerRef.current.clientHeight + imageRef.current.clientHeight - 20
     } else {
       y = e.pageY
     }
@@ -84,10 +84,8 @@ export default function Play() {
   }
 
   async function submitGuess(e) {
-    // console.log(e.target.textContent)
-    const x = Math.round(guess.x / (imageRef.current.clientWidth)*100)
-    const y = Math.round(guess.y / (imageRef.current.clientHeight)*100)
-    fetch(`http://localhost:3000/guess?name=${e.target.textContent}&x=${x}&y=${y}`).then(res => res.json()).then(res => console.log(res))
+    const result = await fetch(`http://localhost:3000/guess?name=${e.target.textContent}&x=${Math.round(guess.x / (imageRef.current.clientWidth)*100)}&y=${Math.round(guess.y / (imageRef.current.clientHeight)*100)}`).then(res => res.json())
+    console.log(result)
     cancelGuess()
   }
 
@@ -107,7 +105,7 @@ export default function Play() {
         <img src='opwaldo.png' onClick={placeGuess} ref={imageRef}/>
         {!!guess ?
           <div className='hidden' ref={guessRef}>
-            <div className='absolute h-12 w-12 border-4 border-black pointer-events-none' style={{left: guess.x-24, top: guess.y-24}}></div>
+            <div className='absolute h-10 w-10 border-4 border-black pointer-events-none' style={{left: guess.x-20, top: guess.y-20}}></div>
             <div className='fixed top-0 bg-black w-screen'>
               <p className='text-center h-10 leading-10'>who did you find?</p>
               <div className='flex flex-wrap justify-between'>
