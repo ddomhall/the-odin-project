@@ -21,12 +21,13 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/guess', function(req, res, next) {
-  const name = req.query.name
-  const x = req.query.x
-  const y = req.query.y
-
-  res.json({name, x, y})
+app.get('/guess', async function(req, res, next) {
+  const guess = await Character.findOne({name: req.query.name}).exec()
+  if (Math.abs(guess.x - req.query.x) <= 1 && Math.abs(guess.y - req.query.y) <= 1) {
+    res.send('1')
+  } else {
+    res.send('0')
+  }
 });
 
 app.listen(3000, () => console.log('listening on :3000'))
