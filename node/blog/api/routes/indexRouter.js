@@ -21,4 +21,8 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+router.get('/search', async (req, res) => {
+	res.json(await User.findOne({username: req.query.username}).exec())
+})
+
 module.exports = router

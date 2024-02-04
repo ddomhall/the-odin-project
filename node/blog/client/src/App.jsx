@@ -11,12 +11,19 @@ function App() {
     window.location.reload()
   }
 
+  async function searchUser(e) {
+    e.preventDefault()
+    const user = await fetch(`http://localhost:3000/search?username=${e.target.search.value}`).then(res => res.json())
+    console.log(user)
+    window.location.replace(`/users/${user._id}`)
+  }
+
   return (
     <>
       <SessionContext.Provider value={{session, setSession}}>
         <nav className='flex w-full justify-between mb-6'>
           <a href='/'>logo</a>
-          <form action='/search'>
+          <form onSubmit={searchUser}>
             <input name='search' />
             <input type='submit' value='search' />
           </form>
