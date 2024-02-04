@@ -10,42 +10,42 @@ export default function Play() {
     {
       id: 1,
       name: 'zoro',
-      found: false
+      found: true
     },
     {
       id: 2,
       name: 'nami',
-      found: false
+      found: true
     },
     {
       id: 3,
       name: 'sanji',
-      found: false
+      found: true
     },
     {
       id: 4,
       name: 'usopp',
-      found: false
+      found: true
     },
     {
       id: 5,
       name: 'robin',
-      found: false
+      found: true
     },
     {
       id: 6,
       name: 'chopper',
-      found: false
+      found: true
     },
     {
       id: 7,
       name: 'franky',
-      found: false
+      found: true
     },
     {
       id: 8,
       name: 'brook',
-      found: false
+      found: true
     },
   ])
   const [guess, setGuess] = useState({x: 0, y: 0})
@@ -54,6 +54,7 @@ export default function Play() {
   const headerRef = useRef(null)
   const imageRef = useRef(null)
   const resultRef = useRef(null)
+  const winRef = useRef(null)
 
   function placeGuess(e) {
     guessRef.current.style.display = 'block'
@@ -94,8 +95,20 @@ export default function Play() {
     } else {
       setGuessResult('wrong')
     }
+
     resultRef.current.showModal()
     cancelGuess()
+  }
+
+  function closeModal() {
+    resultRef.current.close()
+    console.log(characters.filter(c => c.found) == 9)
+    if (characters.filter(c => c.found).length == 9) winRef.current.showModal()
+  }
+
+  function submitResult(e) {
+    e.preventDefault()
+    console.log(e)
   }
 
   return (
@@ -132,7 +145,14 @@ export default function Play() {
           </div> : ''}
         <dialog className='w-40 text-center' ref={resultRef}>
           <p className='h-10 leading-10'>{guessResult}</p>
-          <button className='h-10 w-full' onClick={() => resultRef.current.close()}>close</button>
+          <button className='h-10 w-full' onClick={closeModal}>close</button>
+        </dialog>
+        <dialog className='w-40 text-center' ref={winRef}>
+          <p className='h-10 leading-10'>you win</p>
+          <form onSubmit={submitResult}>
+            <input name='name' placeholder='name' />
+            <input type='submit' />
+          </form>
         </dialog>
       </section>
     </>
