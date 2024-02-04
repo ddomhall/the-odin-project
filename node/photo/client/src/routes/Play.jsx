@@ -49,12 +49,13 @@ export default function Play() {
     },
   ])
   const [guess, setGuess] = useState({x: 0, y: 0})
+  const [guessResult, setGuessResult] = useState()
   const guessRef = useRef(null)
   const headerRef = useRef(null)
   const imageRef = useRef(null)
+  const resultRef = useRef(null)
 
   function placeGuess(e) {
-    // setGuess({x: Math.round((e.pageX/e.target.width)*100), y: Math.round(((e.pageY-80)/e.target.height)*100)})
     guessRef.current.style.display = 'block'
 
     let x
@@ -89,9 +90,11 @@ export default function Play() {
 
     if (result == '1') {
       setCharacters(characters.map(c => c.name == name ? {name: name, found: true} : c))
+      setGuessResult('correct')
     } else {
-      console.log(headerRef.current)
+      setGuessResult('wrong')
     }
+    resultRef.current.showModal()
     cancelGuess()
   }
 
@@ -127,6 +130,10 @@ export default function Play() {
               </div>
             </div>
           </div> : ''}
+        <dialog className='w-40 text-center' ref={resultRef}>
+          <p className='h-10 leading-10'>{guessResult}</p>
+          <button className='h-10 w-full' onClick={() => resultRef.current.close()}>close</button>
+        </dialog>
       </section>
     </>
   )
