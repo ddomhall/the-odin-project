@@ -84,8 +84,14 @@ export default function Play() {
   }
 
   async function submitGuess(e) {
-    const result = await fetch(`http://localhost:3000/guess?name=${e.target.textContent}&x=${Math.round(guess.x / (imageRef.current.clientWidth)*100)}&y=${Math.round(guess.y / (imageRef.current.clientHeight)*100)}`).then(res => res.json())
-    console.log(result)
+    const name = e.target.textContent
+    const result = await fetch(`http://localhost:3000/guess?name=${name}&x=${Math.round(guess.x / (imageRef.current.clientWidth)*100)}&y=${Math.round(guess.y / (imageRef.current.clientHeight)*100)}`).then(res => res.json())
+
+    if (result == '1') {
+      setCharacters(characters.map(c => c.name == name ? {name: name, found: true} : c))
+    } else {
+      console.log(headerRef.current)
+    }
     cancelGuess()
   }
 
