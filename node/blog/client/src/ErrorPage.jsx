@@ -1,3 +1,3 @@
 export default function ErrorPage() {
-  return <>error</>
+  return <div className='w-96 m-auto'>error</div>
 }

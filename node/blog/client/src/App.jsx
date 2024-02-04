@@ -22,6 +22,7 @@ function App() {
           </form>
           {session ? 
             <div>
+              <a href='/message'>message</a>
               <a href='/create'>create</a>
               <a href={'/users/' + session }>profile</a>
               <button onClick={logout}>log out</button>
@@ -32,7 +33,7 @@ function App() {
             </div>
           }
         </nav>
-        <main className='w-96 m-auto'>
+        <main>
           <Outlet />
         </main>
       </SessionContext.Provider>

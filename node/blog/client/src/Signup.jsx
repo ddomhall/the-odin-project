@@ -29,7 +29,7 @@ export default function Signup() {
   }
 
   return(
-    <>
+    <div className='w-96 m-auto'>
       <form onSubmit={signupApi} className='flex flex-col'>
         <input name='username' placeholder='username' required />
         <input name='password' placeholder='password' type='password' required />
@@ -37,7 +37,7 @@ export default function Signup() {
         <input type='submit' value='log in' />
       </form>
       {errors.map(e => <p className='text-red-50'>{e}</p>)}
-    </>
+    </div>
   )
 }
 

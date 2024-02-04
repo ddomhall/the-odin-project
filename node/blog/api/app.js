@@ -7,7 +7,7 @@ const postRouter = require('./routes/postRouter.js')
 const commentRouter = require('./routes/commentRouter.js')
 const cors = require('cors')
 
-const mongoDb = "mongodb+srv://admin:UC0LsnHVY2TAtrUM@cluster0.ty3uuu8.mongodb.net/blog?retryWrites=true&w=majority"
+const mongoDb = "mongodb+srv://admin:N9CnomYIFc8TzGVJ@cluster0.ty3uuu8.mongodb.net/blog?retryWrites=true&w=majority"
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));

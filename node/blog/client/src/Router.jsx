@@ -9,6 +9,7 @@ import Login from './Login.jsx'
 import Signup from './Signup.jsx'
 import Create from './Create.jsx'
 import Comment from './Comment.jsx'
+import Message from './Message.jsx'
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -48,6 +49,10 @@ export default function Router() {
         {
           path: 'comments/:id',
           element: <Comment />
+        },
+        {
+          path: 'message',
+          element: <Message />
         },
       ]
     },

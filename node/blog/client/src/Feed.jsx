@@ -10,7 +10,7 @@ export default function Feed() {
   }, [])
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 w-96 m-auto'>
       {posts.map(p => {
         return(
           <section key={p._id}>

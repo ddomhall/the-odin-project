@@ -49,7 +49,7 @@ export default function Profile() {
   }
 
   return(
-    <>
+    <div className='w-96 m-auto'>
       {!edit ?
         <section>
           <p>{post.content}</p>
@@ -95,7 +95,7 @@ export default function Profile() {
           )
         })}
       </section>
-    </>
+    </div>
   )
 }
 

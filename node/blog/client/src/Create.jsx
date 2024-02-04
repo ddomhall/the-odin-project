@@ -27,7 +27,7 @@ export default function create() {
 
 
   return (
-    <form onSubmit={postApi} className='flex flex-col'>
+    <form onSubmit={postApi} className='flex flex-col w-96 m-auto'>
       <input name='content' placeholder='content' />
       <label htmlFor='published'>published
         <input name='published' id='published' type='checkbox'/>

@@ -31,7 +31,7 @@ export default function Login() {
   }
 
   return(
-    <form onSubmit={loginApi} className='flex flex-col'>
+    <form onSubmit={loginApi} className='flex flex-col w-96 m-auto'>
       <input name='username' placeholder='username' required />
       <input name='password' placeholder='password' type='password' required />
       <input type='submit' value='log in' />

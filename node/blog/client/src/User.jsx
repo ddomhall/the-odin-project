@@ -65,7 +65,7 @@ export default function Profile() {
   }
 
   return(
-    <>
+    <div className='w-96 m-auto'>
       <div className='flex justify-between'>
         {edit ?
           <form onSubmit={editUser}>
@@ -106,6 +106,6 @@ export default function Profile() {
           )
         })}
       </div>
-    </>
+    </div>
   )
 }

@@ -31,7 +31,7 @@ export default function Comment() {
   }
 
   return (
-    <>
+    <div className='w-96 m-auto'>
       <section>
         {!edit ? 
           <div>
@@ -54,6 +54,6 @@ export default function Comment() {
           </div> : ''
         }
       </section>
-    </>
+    </div>
   )
 }
