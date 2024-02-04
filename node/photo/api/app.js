@@ -7,21 +7,33 @@ mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-const characterSchema = new mongoose.Schema({
+const Character = mongoose.model('Character', new mongoose.Schema({
   name: String,
   x: Number,
   y: Number
-})
+}))
 
-const Character = mongoose.model('Character', characterSchema)
+const Timing = mongoose.model('Timing', new mongoose.Schema({
+  name: String,
+  time: Number
+}))
 
 var app = express();
-
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/guess', async function(req, res, next) {
+let count
+let intervalId 
+
+function startTimer() {
+  intervalId = setInterval(() => {
+    console.log(count)
+    count = count + 1
+  }, 1000);
+}
+
+app.get('/guess', async (req, res) => {
   const guess = await Character.findOne({name: req.query.name}).exec()
   if (Math.abs(guess.x - req.query.x) <= 1 && Math.abs(guess.y - req.query.y) <= 1) {
     res.send('1')
@@ -29,5 +41,22 @@ app.get('/guess', async function(req, res, next) {
     res.send('0')
   }
 });
+
+app.get('/timings', async (req, res) => {
+  res.json(await Timing.find().exec())
+})
+
+app.post('/start', (req, res) => {
+  count = 0
+  if (!intervalId) startTimer()
+})
+
+app.post('/stop', (req, res) => {
+  clearInterval(intervalId)
+})
+
+app.post('/submit', async (req, res) => {
+  await new Timing({name: req.query.name, time: count}).save()
+})
 
 app.listen(3000, () => console.log('listening on :3000'))
