@@ -33,7 +33,7 @@ function App() {
           </form>
           {session ? 
             <div>
-              <Link to={'/message'}>message</Link>
+              <Link to={'/message'}>messages</Link>
               <Link to={'/create'}>create</Link>
               <Link to={'/users/' + session }>profile</Link>
               <button onClick={logout}>log out</button>

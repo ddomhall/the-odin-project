@@ -9,7 +9,7 @@ import Login from './Login.jsx'
 import Signup from './Signup.jsx'
 import Create from './Create.jsx'
 import Comment from './Comment.jsx'
-import Message from './Message.jsx'
+import Messages from './Messages.jsx'
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -52,7 +52,7 @@ export default function Router() {
         },
         {
           path: 'message',
-          element: <Message />
+          element: <Messages />
         },
       ]
     },

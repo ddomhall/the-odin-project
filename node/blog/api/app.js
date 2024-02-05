@@ -1,10 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const User = require('./models/userModel.js')
 const indexRouter = require('./routes/indexRouter.js')
 const userRouter = require('./routes/userRouter.js')
 const postRouter = require('./routes/postRouter.js')
 const commentRouter = require('./routes/commentRouter.js')
+const messageRouter = require('./routes/messageRouter.js')
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 
@@ -35,6 +35,7 @@ app.use('/', indexRouter)
 app.use('/users', userRouter)
 app.use('/posts', postRouter)
 app.use('/comments', commentRouter)
+app.use('/messages', messageRouter)
 
 
 app.listen(3000, console.log('listening on :3000'))
