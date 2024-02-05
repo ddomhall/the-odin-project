@@ -3,12 +3,18 @@ const router = express.Router()
 const User = require('../models/userModel.js')
 const Conversation = require('../models/conversationModel.js')
 
+router.get('/', async (req, res) => {
+	res.json(await Conversation.find({users: req.cookies.session}).populate('users').exec())
+})
+
 router.post('/', async (req, res) => {
-	let conversation = await Conversation.findOne({users: [req.cookies.session, req.body.recipient]})
-	if (conversation) {
-	} else {
-		conversation = await new Conversation({users: [req.cookies.session, req.body.recipient]}).save()
+	const filter = {users: [req.cookies.session, req.body.recipient]}
+	let conversation = await Conversation.findOne(filter).exec()
+
+	if (!conversation) {
+		conversation = await new Conversation(filter).save()
 	}
+
 	res.json(conversation)
 })
 
