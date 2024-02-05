@@ -15,10 +15,14 @@ router.post('/login', async (req, res) => {
 			} else if (!result) {
 				res.status(404).json({msg: "incorrect password"})
 			} else {
-				res.json(user._id)
+				res.cookie("session", user._id.toString()).json({m: 'success'})
 			}
 		})
 	}
+})
+
+router.post('/logout', (req, res) => {
+	res.clearCookie('session').json({m: 'success'})
 })
 
 router.get('/search', async (req, res) => {

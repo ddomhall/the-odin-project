@@ -7,15 +7,19 @@ function App() {
   const [session, setSession] = useState(Cookies.get('session'))
 
   function logout() {
-    Cookies.remove('session')
+    fetch('http://localhost:3000/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
     window.location.reload()
   }
 
   async function searchUser(e) {
     e.preventDefault()
     const user = await fetch(`http://localhost:3000/search?username=${e.target.search.value}`).then(res => res.json())
-    console.log(user)
-    window.location.replace(`/users/${user._id}`)
+    if (user) {
+      window.location.replace(`/users/${user._id}`)
+    }
   }
 
   return (
