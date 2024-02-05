@@ -64,6 +64,20 @@ export default function Profile() {
     }).then(window.location.reload())
   }
 
+  function messageUser() {
+    fetch('http://localhost:3000/conversations', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body : JSON.stringify({
+        recipient: id
+      })
+    }).then(res => res.json()).then(res => console.log(res))
+  }
+
   return(
     <div className='w-96 m-auto'>
       <div className='flex justify-between'>
@@ -85,6 +99,7 @@ export default function Profile() {
                 <button onClick={deleteUser}>delete</button>
               </div> :
               <div>
+                <button onClick={messageUser}>message</button>
                 {viewer.following.includes(id) ?
                   <button onClick={unfollowUser}>unfollow</button> :
                   <button onClick={followUser}>follow</button>
