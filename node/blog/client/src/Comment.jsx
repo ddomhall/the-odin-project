@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 import {SessionContext} from './SessionContext.jsx'
 
 export default function Comment() {
@@ -36,7 +36,7 @@ export default function Comment() {
         {!edit ? 
           <div>
             <p>{comment.content}</p>
-            <a href={'/users/' + comment.author._id}>{comment.author.username}</a>
+            <Link to={'/users/' + comment.author._id}>{comment.author.username}</Link>
             <p>{comment.date}</p>
           </div> :
           <form onSubmit={editComment} className='flex flex-col'>

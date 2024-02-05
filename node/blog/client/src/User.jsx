@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 import {useState, useEffect, useContext} from 'react'
 import {SessionContext} from './SessionContext.jsx'
 import Cookies from 'js-cookie'
@@ -97,12 +97,12 @@ export default function Profile() {
       <div className='flex gap-6 flex-col mt-6'>
         {posts.map(p => {
           return (
-            <a href={'/posts/' + p._id} key={p._id} className='w-full'>
+            <Link to={'/posts/' + p._id} key={p._id} className='w-full'>
               <section >
                 <p>{p.content}</p>
                 <p>{p.date}</p>
               </section>
-            </a>
+            </Link>
           )
         })}
       </div>

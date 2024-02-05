@@ -1,4 +1,4 @@
-import {Outlet} from 'react-router-dom'
+import {Outlet, Link} from 'react-router-dom'
 import {useState, useContext} from 'react'
 import {SessionContext} from './SessionContext.jsx'
 import Cookies from 'js-cookie'
@@ -11,7 +11,7 @@ function App() {
       method: 'POST',
       credentials: 'include',
     })
-    window.location.reload()
+    window.location.replace('/')
   }
 
   async function searchUser(e) {
@@ -26,21 +26,21 @@ function App() {
     <>
       <SessionContext.Provider value={{session, setSession}}>
         <nav className='flex w-full justify-between mb-6'>
-          <a href='/'>logo</a>
+          <Link to={'/'}>logo</Link>
           <form onSubmit={searchUser}>
             <input name='search' />
             <input type='submit' value='search' />
           </form>
           {session ? 
             <div>
-              <a href='/message'>message</a>
-              <a href='/create'>create</a>
-              <a href={'/users/' + session }>profile</a>
+              <Link to={'/message'}>message</Link>
+              <Link to={'/create'}>create</Link>
+              <Link to={'/users/' + session }>profile</Link>
               <button onClick={logout}>log out</button>
             </div> :
             <div>
-              <a href='/signup'>sign up</a>
-              <a href='/login'>log in</a>
+              <Link to={'/signup'}>sign up</Link>
+              <Link to={'/login'}>log in</Link>
             </div>
           }
         </nav>

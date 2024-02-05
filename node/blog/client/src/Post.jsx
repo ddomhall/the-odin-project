@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 import {useState, useEffect, useContext} from 'react'
 import {SessionContext} from './SessionContext.jsx'
 
@@ -53,9 +53,9 @@ export default function Profile() {
       {!edit ?
         <section>
           <p>{post.content}</p>
-          <a href={'/users/' + post.author._id}>
+          <Link to={'/users/' + post.author._id}>
             <p>{post.author.username}</p>
-          </a>
+          </Link>
           <p>{post.date}</p>
         </section> :
         <form onSubmit={editPost} className='flex flex-col'>
@@ -88,8 +88,8 @@ export default function Profile() {
         {comments.map(c => {
           return (
             <div key={c._id} className='flex flex-col'>
-              <a href={'/comments/' + c._id}>{c.content}</a>
-              <a href={'/users/' + c.author._id}>{c.author.username}</a>
+              <Link to={'/comments/' + c._id}>{c.content}</Link>
+              <Link to={'/users/' + c.author._id}>{c.author.username}</Link>
               <p>{c.date}</p>
             </div>
           )
