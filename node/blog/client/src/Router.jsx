@@ -54,6 +54,10 @@ export default function Router() {
           path: 'conversations',
           element: <Conversations />
         },
+        {
+          path: 'conversations/:id',
+          element: <Conversations />
+        },
       ]
     },
   ]);

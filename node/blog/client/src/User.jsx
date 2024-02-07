@@ -75,7 +75,7 @@ export default function Profile() {
       body : JSON.stringify({
         recipient: id
       })
-    }).then(res => res.json()).then(res => console.log(res))
+    }).then(res => res.json()).then(res => window.location.replace('/conversations/' + res._id))
   }
 
   return(
